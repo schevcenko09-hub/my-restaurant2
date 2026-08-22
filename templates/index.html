@@ -1,0 +1,52 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+VYBE — Головна
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-small">
+            MODERN EUROPEAN CUISINE
+        </p>
+
+        <h1>
+            КАРОЛИНКА Я ЛЮБЛЮ ТЕБЯ ОЧЕНЬ ОЧЕНЬ СИЛЬНО
+        </h1>
+
+        <p class="hero-description">
+            Сучасна європейська кухня,
+            приємна атмосфера та особливі моменти.
+        </p>
+
+        <a href="{{ url_for('menu') }}" class="button">
+            Переглянути меню
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="about">
+
+    <h2>
+        Ласкаво просимо до VYBE
+    </h2>
+
+    <p>
+        VYBE — це сучасний ресторан,
+        де якісні продукти, авторські страви
+        та затишна атмосфера створюють
+        особливі моменти.
+    </p>
+
+</section>
+
+{% endblock %}

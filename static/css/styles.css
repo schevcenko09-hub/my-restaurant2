@@ -1,0 +1,386 @@
+
+/* =========================
+   ОСНОВНІ НАЛАШТУВАННЯ
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f1eb;
+    color: #292724;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5dfd6;
+    padding: 20px 60px;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #8b5e3c;
+}
+
+
+/* =========================
+   ГОЛОВНА СТОРІНКА
+========================= */
+
+.hero {
+    min-height: 75vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background-color: #e8e0d5;
+}
+
+.hero-content {
+    max-width: 750px;
+    padding: 30px;
+}
+
+.hero-small {
+    color: #8b5e3c;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 90px;
+    letter-spacing: 14px;
+    margin-bottom: 20px;
+}
+
+.hero-description {
+    font-size: 19px;
+    line-height: 1.7;
+    color: #57514a;
+    margin-bottom: 35px;
+}
+
+
+/* =========================
+   КНОПКИ
+========================= */
+
+.button {
+    display: inline-block;
+
+    background-color: #8b5e3c;
+    color: #ffffff;
+
+    padding: 14px 30px;
+
+    border: none;
+    border-radius: 4px;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.button:hover {
+    background-color: #6f482f;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.about {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 90px 30px;
+
+    text-align: center;
+}
+
+.about h2 {
+    font-size: 34px;
+    margin-bottom: 25px;
+}
+
+.about p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #5c5751;
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.menu-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 70px 30px;
+}
+
+.menu-header {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.menu-header h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.menu-header p:last-child {
+    color: #6b655e;
+    font-size: 17px;
+}
+
+.menu-section {
+    margin-bottom: 70px;
+}
+
+.menu-section h2 {
+    font-size: 30px;
+    margin-bottom: 30px;
+
+    border-bottom: 1px solid #d8d0c6;
+    padding-bottom: 12px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.menu-card {
+    background-color: #ffffff;
+    padding: 28px;
+
+    border: 1px solid #e5dfd6;
+    border-radius: 6px;
+
+    transition: 0.3s;
+}
+
+.menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.menu-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.menu-card p {
+    color: #6b655e;
+    line-height: 1.6;
+    min-height: 50px;
+}
+
+.menu-card span {
+    display: block;
+
+    margin-top: 20px;
+
+    color: #8b5e3c;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   LOGIN / REGISTER
+========================= */
+
+.auth-page {
+    min-height: 75vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 60px 20px;
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 450px;
+
+    background-color: #ffffff;
+
+    padding: 45px;
+
+    border: 1px solid #e5dfd6;
+    border-radius: 6px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.auth-box h1 {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.auth-box > p {
+    color: #6b655e;
+    margin-bottom: 30px;
+}
+
+.auth-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-box label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.auth-box input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    margin-bottom: 20px;
+
+    border: 1px solid #d8d0c6;
+    border-radius: 4px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.auth-box input:focus {
+    border-color: #8b5e3c;
+}
+
+.auth-box .button {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 25px !important;
+    margin-bottom: 0 !important;
+}
+
+.auth-link a {
+    color: #8b5e3c;
+    font-weight: bold;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    background-color: #292724;
+    color: #ffffff;
+
+    text-align: center;
+
+    padding: 25px;
+}
+
+.footer p {
+    font-size: 14px;
+    color: #d8d2ca;
+}
+
+
+/* =========================
+   АДАПТАЦІЯ ДЛЯ ТЕЛЕФОНУ
+========================= */
+
+@media (max-width: 800px) {
+
+    .header {
+        padding: 20px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 60px;
+        letter-spacing: 8px;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-header h1 {
+        font-size: 38px;
+    }
+
+    .auth-box {
+        padding: 30px 25px;
+    }
+}
+
+

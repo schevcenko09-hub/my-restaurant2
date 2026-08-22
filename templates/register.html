@@ -1,0 +1,73 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+VYBE — Реєстрація
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-box">
+
+        <h1>Реєстрація</h1>
+
+        <p>Створіть свій акаунт VYBE</p>
+
+        <form method="POST">
+
+            <label for="name">Ім'я</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Введіть ім'я"
+                required
+            >
+
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Введіть email"
+                required
+            >
+
+            <label for="password">Пароль</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Створіть пароль"
+                required
+            >
+
+            <label for="password2">Підтвердження пароля</label>
+            <input
+                type="password"
+                id="password2"
+                name="password2"
+                placeholder="Повторіть пароль"
+                required
+            >
+
+            <button type="submit" class="button">
+                Зареєструватися
+            </button>
+
+        </form>
+
+        <p class="auth-link">
+            Вже маєте акаунт?
+            <a href="{{ url_for('login') }}">
+                Увійти
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

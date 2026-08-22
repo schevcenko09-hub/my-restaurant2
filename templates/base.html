@@ -1,0 +1,72 @@
+
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}VYBE Restaurant{% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('index') }}" class="logo">
+            VYBE
+        </a>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('index') }}">
+                Головна
+            </a>
+
+            <a href="{{ url_for('menu') }}">
+                Меню
+            </a>
+
+            <a href="{{ url_for('login') }}">
+                Увійти
+            </a>
+
+            <a href="{{ url_for('register') }}">
+                Реєстрація
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 VYBE Restaurant
+    </p>
+
+</footer>
+
+</body>
+
+</html>

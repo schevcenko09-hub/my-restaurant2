@@ -1,0 +1,55 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+VYBE — Вхід
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-box">
+
+        <h1>Вхід</h1>
+
+        <p>Увійдіть до свого акаунта VYBE</p>
+
+        <form method="POST">
+
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Введіть email"
+                required
+            >
+
+            <label for="password">Пароль</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Введіть пароль"
+                required
+            >
+
+            <button type="submit" class="button">
+                Увійти
+            </button>
+
+        </form>
+
+        <p class="auth-link">
+            Немає акаунта?
+            <a href="{{ url_for('register') }}">
+                Зареєструватися
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
