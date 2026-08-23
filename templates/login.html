@@ -15,9 +15,16 @@ VYBE — Вхід
 
         <p>Увійдіть до свого акаунта VYBE</p>
 
+        {% if error %}
+            <p class="error">
+                {{ error }}
+            </p>
+        {% endif %}
+
         <form method="POST">
 
             <label for="email">Email</label>
+
             <input
                 type="email"
                 id="email"
@@ -27,6 +34,7 @@ VYBE — Вхід
             >
 
             <label for="password">Пароль</label>
+
             <input
                 type="password"
                 id="password"
@@ -42,10 +50,13 @@ VYBE — Вхід
         </form>
 
         <p class="auth-link">
+
             Немає акаунта?
+
             <a href="{{ url_for('register') }}">
                 Зареєструватися
             </a>
+
         </p>
 
     </div>

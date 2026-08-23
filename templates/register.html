@@ -14,6 +14,11 @@ VYBE — Реєстрація
         <h1>Реєстрація</h1>
 
         <p>Створіть свій акаунт VYBE</p>
+{% if error %}
+    <p class="error">
+        {{ error }}
+    </p>
+{% endif %}
 
         <form method="POST">
 
