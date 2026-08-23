@@ -1,0 +1,91 @@
+
+\{% extends "base.html" %}
+
+{% block title %}
+VYBE — Кошик
+{% endblock %}
+
+{% block content %}
+
+<section class="menu-page">
+
+    <div class="menu-header">
+
+        <p class="hero-small">
+            VYBE RESTAURANT
+        </p>
+
+        <h1>Ваш кошик</h1>
+
+    </div>
+
+    {% if cart_items %}
+
+        <div class="menu-grid">
+
+            {% for item in cart_items %}
+
+                <div class="menu-card">
+
+                    <h3>
+                        {{ item.name }}
+                    </h3>
+
+                    <p>
+                        {{ item.description }}
+                    </p>
+
+                    <span>
+                        €{{ item.price }}
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="menu-header">
+
+            <h2>
+                Разом: €{{ total }}
+            </h2>
+
+            <a
+                href="{{ url_for('menu') }}"
+                class="button"
+            >
+                Продовжити покупки
+            </a>
+
+        </div>
+
+    {% else %}
+
+        <div class="menu-header">
+
+            <h2>
+                Ваш кошик порожній
+            </h2>
+
+            <p>
+                Додайте щось смачненьке з нашого меню.
+            </p>
+
+            <br>
+
+            <a
+                href="{{ url_for('menu') }}"
+                class="button"
+            >
+                Перейти до меню
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+

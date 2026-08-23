@@ -13,7 +13,7 @@
     </title>
 
     <link rel="stylesheet"
-      href="{{ url_for('static', filename='css/styles.css') }}">
+          href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
@@ -36,13 +36,31 @@
                 Меню
             </a>
 
-            <a href="{{ url_for('login') }}">
-                Увійти
+            <a href="{{ url_for('cart') }}">
+                Кошик
             </a>
 
-            <a href="{{ url_for('register') }}">
-                Реєстрація
-            </a>
+            {% if session.get("user_id") %}
+
+                <a href="{{ url_for('profile') }}">
+                    Профіль
+                </a>
+
+                <a href="{{ url_for('logout') }}">
+                    Вийти
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}">
+                    Увійти
+                </a>
+
+                <a href="{{ url_for('register') }}">
+                    Реєстрація
+                </a>
+
+            {% endif %}
 
         </div>
 
@@ -50,14 +68,12 @@
 
 </header>
 
-
 <main>
 
     {% block content %}
     {% endblock %}
 
 </main>
-
 
 <footer class="footer">
 
@@ -70,3 +86,4 @@
 </body>
 
 </html>
+

@@ -1,0 +1,54 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+VYBE — {{ dish.name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-box">
+
+        <p class="hero-small">
+            VYBE RESTAURANT
+        </p>
+
+        <h1>{{ dish.name }}</h1>
+
+        <p>
+            {{ dish.description }}
+        </p>
+
+        <h2>
+            €{{ dish.price }}
+        </h2>
+
+        <form method="POST" action="{{ url_for('add_to_cart') }}">
+
+            <input
+                type="hidden"
+                name="dish_id"
+                value="{{ dish_id }}"
+            >
+
+            <button type="submit" class="button">
+                Додати до кошика
+            </button>
+
+        </form>
+
+        <p class="auth-link">
+
+            <a href="{{ url_for('menu') }}">
+                ← Повернутися до меню
+            </a>
+
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

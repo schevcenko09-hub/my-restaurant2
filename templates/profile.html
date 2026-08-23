@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+VYBE — Профіль
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-box">
+
+        <h1>Мій профіль</h1>
+
+        <p>Вітаємо у VYBE, {{ username }}!</p>
+
+        <div>
+            <p>
+                <strong>Ім'я:</strong>
+                {{ username }}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                {{ email }}
+            </p>
+        </div>
+
+        <a href="{{ url_for('logout') }}" class="button">
+            Вийти з акаунта
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

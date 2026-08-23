@@ -648,3 +648,152 @@ input {
 
 
 
+.cart-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 70px 30px;
+    min-height: 75vh;
+}
+
+.cart-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.cart-header h1 {
+    font-size: 48px;
+    margin-top: 10px;
+}
+
+.cart-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart-item {
+    background: #ffffff;
+    border: 1px solid #e5dfd6;
+    border-radius: 8px;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-info h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.cart-info p {
+    color: #8b5e3c;
+    font-weight: bold;
+}
+
+.cart-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.quantity-button {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: #a93232;
+    color: white;
+    border-radius: 4px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.quantity-button:hover {
+    background: #862525;
+}
+
+.quantity {
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
+
+.remove-button {
+    border: none;
+    background: #292724;
+    color: white;
+    padding: 9px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background: #a93232;
+}
+
+.cart-bottom {
+    margin-top: 35px;
+    padding: 25px;
+    background: #a93232;
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.clear-button {
+    background: white;
+    color: #a93232;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.clear-button:hover {
+    background: #f5f1eb;
+}
+
+.empty-cart {
+    text-align: center;
+    background: white;
+    padding: 60px 30px;
+    border-radius: 8px;
+    border: 1px solid #e5dfd6;
+}
+
+.empty-cart h2 {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.empty-cart p {
+    color: #6b655e;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 700px) {
+
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .cart-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .cart-bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .cart-header h1 {
+        font-size: 38px;
+    }
+}
