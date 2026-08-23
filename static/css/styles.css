@@ -1,7 +1,14 @@
 
-/* =========================
-   ОСНОВНІ НАЛАШТУВАННЯ
-========================= */
+:root {
+    --bg: #f5f1eb;
+    --light: #e8e0d5;
+    --white: #ffffff;
+    --dark: #292724;
+    --gray: #6b655e;
+    --red: #8b2f2f;
+    --red-dark: #651f1f;
+    --border: #ded5ca;
+}
 
 * {
     margin: 0;
@@ -9,11 +16,16 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f5f1eb;
-    color: #292724;
+    background: var(--bg);
+    color: var(--dark);
     min-height: 100vh;
+    line-height: 1.6;
 }
 
 a {
@@ -21,21 +33,25 @@ a {
     color: inherit;
 }
 
+button,
+input {
+    font-family: inherit;
+}
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .header {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e5dfd6;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
     padding: 20px 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .navbar {
     max-width: 1200px;
-    margin: 0 auto;
-
+    margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -44,126 +60,172 @@ a {
 .logo {
     font-size: 30px;
     font-weight: bold;
-    letter-spacing: 5px;
+    letter-spacing: 6px;
+    transition: .3s;
+}
+
+.logo:hover {
+    color: var(--red);
 }
 
 .nav-links {
     display: flex;
-    align-items: center;
     gap: 30px;
+    align-items: center;
 }
 
 .nav-links a {
     font-size: 15px;
-    transition: 0.3s;
+    transition: .3s;
+    position: relative;
 }
 
 .nav-links a:hover {
-    color: #8b5e3c;
+    color: var(--red);
 }
 
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: var(--red);
+    transition: .3s;
+}
 
-/* =========================
-   ГОЛОВНА СТОРІНКА
-========================= */
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* HERO */
 
 .hero {
     min-height: 75vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     text-align: center;
+    background: var(--light);
+    position: relative;
+    overflow: hidden;
+}
 
-    background-color: #e8e0d5;
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border: 1px solid rgba(139,47,47,.15);
+    border-radius: 50%;
+    top: -200px;
+    right: -100px;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgba(139,47,47,.12);
+    border-radius: 50%;
+    bottom: -150px;
+    left: -80px;
 }
 
 .hero-content {
-    max-width: 750px;
-    padding: 30px;
+    max-width: 800px;
+    padding: 40px 30px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp .8s ease;
 }
 
 .hero-small {
-    color: #8b5e3c;
+    color: var(--red);
     font-size: 13px;
     font-weight: bold;
-    letter-spacing: 4px;
+    letter-spacing: 5px;
     margin-bottom: 20px;
 }
 
 .hero h1 {
     font-size: 90px;
+    line-height: 1;
     letter-spacing: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .hero-description {
-    font-size: 19px;
-    line-height: 1.7;
+    max-width: 650px;
+    margin: 0 auto 35px;
     color: #57514a;
-    margin-bottom: 35px;
+    font-size: 19px;
+    line-height: 1.8;
 }
 
-
-/* =========================
-   КНОПКИ
-========================= */
+/* BUTTON */
 
 .button {
     display: inline-block;
-
-    background-color: #8b5e3c;
-    color: #ffffff;
-
-    padding: 14px 30px;
-
-    border: none;
-    border-radius: 4px;
-
+    padding: 14px 32px;
+    background: var(--red);
+    color: var(--white);
+    border: 1px solid var(--red);
+    border-radius: 5px;
     font-size: 15px;
+    font-weight: bold;
     cursor: pointer;
-
-    transition: 0.3s;
+    transition: .3s;
 }
 
 .button:hover {
-    background-color: #6f482f;
+    background: var(--red-dark);
+    border-color: var(--red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(101,31,31,.2);
 }
 
-
-/* =========================
-   ABOUT
-========================= */
+/* ABOUT */
 
 .about {
     max-width: 800px;
-    margin: 0 auto;
+    margin: auto;
     padding: 90px 30px;
-
     text-align: center;
 }
 
 .about h2 {
-    font-size: 34px;
-    margin-bottom: 25px;
+    display: inline-block;
+    position: relative;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.about h2::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -12px;
+    transform: translateX(-50%);
+    width: 55px;
+    height: 3px;
+    background: var(--red);
 }
 
 .about p {
+    color: #5c5751;
     font-size: 18px;
     line-height: 1.8;
-    color: #5c5751;
 }
 
-
-/* =========================
-   MENU
-========================= */
+/* MENU */
 
 .menu-page {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 70px 30px;
+    margin: auto;
+    padding: 80px 30px;
 }
 
 .menu-header {
@@ -172,12 +234,21 @@ a {
 }
 
 .menu-header h1 {
-    font-size: 48px;
+    font-size: 50px;
+    letter-spacing: 2px;
     margin-bottom: 15px;
 }
 
+.menu-header p:first-child {
+    color: var(--red);
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+}
+
 .menu-header p:last-child {
-    color: #6b655e;
+    color: var(--gray);
     font-size: 17px;
 }
 
@@ -186,12 +257,24 @@ a {
 }
 
 .menu-section h2 {
+    position: relative;
     font-size: 30px;
     margin-bottom: 30px;
-
-    border-bottom: 1px solid #d8d0c6;
-    padding-bottom: 12px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid var(--border);
 }
+
+.menu-section h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 70px;
+    height: 3px;
+    background: var(--red);
+}
+
+/* MENU GRID */
 
 .menu-grid {
     display: grid;
@@ -199,69 +282,85 @@ a {
     gap: 25px;
 }
 
+/* MENU CARD */
+
 .menu-card {
-    background-color: #ffffff;
+    background: var(--red, white fallback);
+    color: var(--white, black fallback);
     padding: 28px;
-
-    border: 1px solid #e5dfd6;
-    border-radius: 6px;
-
-    transition: 0.3s;
+    border: 1px solid var(--red);
+    border-radius: 7px;
+    min-height: 190px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: .3s;
+    box-shadow: 0 6px 18px rgba(101,31,31,.12);
 }
 
 .menu-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    background: var(--white fallback white opacity 0.95);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(101,31,31,.25);
+}
+
+.menu-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,.5);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: .3s;
+}
+
+.menu-card:hover::before {
+    transform: scaleX(1);
 }
 
 .menu-card h3 {
-    font-size: 20px;
+    color: var(--white);
+    font-size: 21px;
     margin-bottom: 12px;
 }
 
 .menu-card p {
-    color: #6b655e;
+    color: #f8eaea;
+    font-size: 15px;
     line-height: 1.6;
-    min-height: 50px;
 }
 
 .menu-card span {
     display: block;
-
     margin-top: 20px;
-
-    color: #8b5e3c;
-    font-size: 19px;
+    color: var(--white);
+    font-size: 20px;
     font-weight: bold;
 }
 
-
-/* =========================
-   LOGIN / REGISTER
-========================= */
+/* AUTH */
 
 .auth-page {
     min-height: 75vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding: 60px 20px;
 }
 
 .auth-box {
     width: 100%;
     max-width: 450px;
-
-    background-color: #ffffff;
-
+    background: var(--white);
     padding: 45px;
-
-    border: 1px solid #e5dfd6;
-    border-radius: 6px;
-
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    box-shadow: 0 15px 40px rgba(41,39,36,.08);
 }
 
 .auth-box h1 {
@@ -270,7 +369,7 @@ a {
 }
 
 .auth-box > p {
-    color: #6b655e;
+    color: var(--gray);
     margin-bottom: 30px;
 }
 
@@ -287,21 +386,19 @@ a {
 
 .auth-box input {
     width: 100%;
-
     padding: 13px 14px;
-
     margin-bottom: 20px;
-
+    background: #faf8f5;
     border: 1px solid #d8d0c6;
-    border-radius: 4px;
-
+    border-radius: 5px;
     font-size: 15px;
-
     outline: none;
+    transition: .3s;
 }
 
 .auth-box input:focus {
-    border-color: #8b5e3c;
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(139,47,47,.08);
 }
 
 .auth-box .button {
@@ -316,42 +413,100 @@ a {
 }
 
 .auth-link a {
-    color: #8b5e3c;
+    color: var(--red);
     font-weight: bold;
 }
 
 .auth-link a:hover {
+    color: var(--red-dark);
     text-decoration: underline;
 }
 
-
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 .footer {
-    background-color: #292724;
-    color: #ffffff;
-
+    background: var(--dark);
+    color: var(--white);
     text-align: center;
+    padding: 30px 20px;
+}
 
-    padding: 25px;
+.footer::before {
+    content: "VYBE";
+    display: block;
+    color: var(--red);
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
 }
 
 .footer p {
-    font-size: 14px;
     color: #d8d2ca;
+    font-size: 14px;
 }
 
+/* EXTRA */
 
-/* =========================
-   АДАПТАЦІЯ ДЛЯ ТЕЛЕФОНУ
-========================= */
+.red {
+    color: var(--red);
+}
 
-@media (max-width: 800px) {
+.center {
+    text-align: center;
+}
+
+.red-line {
+    width: 60px;
+    height: 3px;
+    background: var(--red);
+    margin: 20px auto;
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--red);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--red-dark);
+}
+
+::selection {
+    background: var(--red);
+    color: var(--white);
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
 
     .header {
-        padding: 20px;
+        padding: 20px 30px;
     }
 
     .navbar {
@@ -360,27 +515,136 @@ a {
     }
 
     .nav-links {
-        gap: 15px;
+        gap: 20px;
         flex-wrap: wrap;
         justify-content: center;
     }
 
     .hero h1 {
-        font-size: 60px;
-        letter-spacing: 8px;
+        font-size: 65px;
+        letter-spacing: 10px;
+    }
+
+    .hero-description {
+        font-size: 17px;
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .menu-page {
+        padding: 70px 25px;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .header {
+        padding: 18px 15px;
+    }
+
+    .logo {
+        font-size: 25px;
+        letter-spacing: 5px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 14px;
+    }
+
+    .hero {
+        min-height: 65vh;
+    }
+
+    .hero-content {
+        padding: 30px 20px;
+    }
+
+    .hero-small {
+        font-size: 11px;
+        letter-spacing: 4px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        letter-spacing: 7px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .button {
+        padding: 13px 25px;
+    }
+
+    .about {
+        padding: 70px 25px;
+    }
+
+    .about h2 {
+        font-size: 31px;
+    }
+
+    .about p {
+        font-size: 16px;
+    }
+
+    .menu-page {
+        padding: 60px 20px;
+    }
+
+    .menu-header {
+        margin-bottom: 50px;
+    }
+
+    .menu-header h1 {
+        font-size: 40px;
+    }
+
+    .menu-header p:last-child {
+        font-size: 15px;
     }
 
     .menu-grid {
         grid-template-columns: 1fr;
     }
 
-    .menu-header h1 {
-        font-size: 38px;
+    .menu-section {
+        margin-bottom: 55px;
+    }
+
+    .menu-section h2 {
+        font-size: 27px;
+    }
+
+    .menu-card {
+        padding: 25px;
+    }
+
+    .auth-page {
+        padding: 45px 15px;
     }
 
     .auth-box {
-        padding: 30px 25px;
+        padding: 35px 25px;
+    }
+
+    .auth-box h1 {
+        font-size: 30px;
+    }
+
+    .footer {
+        padding: 25px 15px;
     }
 }
+
 
 
