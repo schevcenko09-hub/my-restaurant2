@@ -229,6 +229,12 @@ dishes = {
     }
 }
 
+закуски = ["брускета з томатами — 8$", "буррата з  томатами — 11$", "карпачо з яловичини — 13$"]
+паста = ["карбонара — 14$", "куряча паста — 15$", "трюфельна паста — 16$"]
+піца = ["маргарита — 11$", "пепероні — 13$" , "чотири сира — 14$"]
+основні_страви = ["лосось з овочами — 21$", "куряче філе — 17$", "яловичий стейк — 24$"]
+
+
 
 @app.route("/")
 def index():
@@ -479,10 +485,7 @@ def add_to_cart():
     )
 
 
-@app.route(
-    "/remove-from-cart/<int:item_id>",
-    methods=["POST"]
-)
+@app.route("/remove-from-cart/<int:item_id>", methods=["POST"])
 def remove_from_cart(item_id):
 
     if "user_id" not in session:
@@ -509,10 +512,7 @@ def remove_from_cart(item_id):
     )
 
 
-@app.route(
-    "/increase-cart/<int:item_id>",
-    methods=["POST"]
-)
+@app.route("/increase-cart/<int:item_id>",methods=["POST"])
 def increase_cart(item_id):
 
     if "user_id" not in session:
@@ -537,10 +537,7 @@ def increase_cart(item_id):
     )
 
 
-@app.route(
-    "/decrease-cart/<int:item_id>",
-    methods=["POST"]
-)
+@app.route("/decrease-cart/<int:item_id>",methods=["POST"])
 def decrease_cart(item_id):
 
     if "user_id" not in session:
@@ -573,10 +570,7 @@ def decrease_cart(item_id):
     )
 
 
-@app.route(
-    "/clear-cart",
-    methods=["POST"]
-)
+@app.route("/clear-cart",methods=["POST"])
 def clear_cart():
 
     if "user_id" not in session:
@@ -598,4 +592,8 @@ def clear_cart():
 
 if __name__ == "__main__":
     app.run(debug=True,port=5001)
+
+
+
+
 
