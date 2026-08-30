@@ -1,4 +1,5 @@
 
+
 {% extends "base.html" %}
 
 {% block title %}
@@ -7,48 +8,80 @@ VYBE — {{ dish.name }}
 
 {% block content %}
 
-<section class="auth-page">
+<section class="dish-page">
 
-    <div class="auth-box">
+    <div class="dish-card">
 
-        <p class="hero-small">
-            VYBE RESTAURANT
-        </p>
+        <div class="dish-category">
+            {{ dish.category }}
+        </div>
 
-        <h1>{{ dish.name }}</h1>
+        <h1>
+            {{ dish.name }}
+        </h1>
 
-        <p>
+        <div class="dish-line"></div>
+
+        <p class="dish-description">
             {{ dish.description }}
         </p>
 
-        <h2>
-            €{{ dish.price }}
-        </h2>
+        <div class="dish-bottom">
 
-        <form method="POST" action="{{ url_for('add_to_cart') }}">
+            <div class="dish-price">
+                €{{ "%.2f"|format(dish.price) }}
+            </div>
 
-            <input
-                type="hidden"
-                name="dish_id"
-                value="{{ dish_id }}"
-            >
+            {% if session.get("user_id") %}
 
-            <button type="submit" class="button">
-                Додати до кошика
-            </button>
+                <form
+                    method="POST"
+                    action="{{ url_for('add_to_cart') }}"
+                >
 
-        </form>
+                    <input
+                        type="hidden"
+                        name="dish_id"
+                        value="{{ dish.id }}"
+                    >
 
-        <p class="auth-link">
+                    <button
+                        type="submit"
+                        class="dish-cart-button"
+                    >
+                        Додати до кошика
+                    </button>
 
-            <a href="{{ url_for('menu') }}">
-                ← Повернутися до меню
-            </a>
+                </form>
 
-        </p>
+            {% else %}
+
+                <a
+                    href="{{ url_for('login') }}"
+                    class="dish-cart-button"
+                >
+                    Увійдіть, щоб замовити
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <div class="dish-navigation">
+
+        <a
+            href="{{ url_for('menu') }}"
+            class="dish-back-button"
+        >
+            ← Повернутися до меню
+        </a>
 
     </div>
 
 </section>
 
 {% endblock %}
+

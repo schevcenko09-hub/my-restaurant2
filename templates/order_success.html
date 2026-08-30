@@ -1,0 +1,50 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}
+VYBE — Замовлення оформлено
+{% endblock %}
+
+{% block content %}
+
+<section class="menu-page">
+
+    <div class="menu-header">
+
+        <p class="hero-small">VYBE RESTAURANT</p>
+
+        <h1>Замовлення оформлено!</h1>
+
+        <p>
+            Дякуємо за ваше замовлення.
+        </p>
+
+        <p>
+            Номер замовлення:
+            <strong>#{{ order.id }}</strong>
+        </p>
+
+        <p>
+            Сума:
+            <strong>€{{ "%.2f"|format(order.total) }}</strong>
+        </p>
+
+        <p>
+            Статус:
+            <strong>{{ order.status }}</strong>
+        </p>
+
+        <a href="{{ url_for('orders') }}" class="button">
+            Мої замовлення
+        </a>
+
+        <a href="{{ url_for('menu') }}" class="button">
+            Повернутися до меню
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

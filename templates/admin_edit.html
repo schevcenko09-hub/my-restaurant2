@@ -1,0 +1,284 @@
+
+
+     {% extends "base.html" %}
+
+{% block title %}
+VYBE — {% if dish %}Редагування страви{% else %}Нова страва{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-edit-page">
+
+    <div class="admin-edit-container">
+
+        <div class="admin-edit-header">
+
+            <p class="hero-small">
+                VYBE RESTAURANT
+            </p>
+
+            <h1>
+                {% if dish %}
+                    Редагування страви
+                {% else %}
+                    Додати страву
+                {% endif %}
+            </h1>
+
+            <p>
+                {% if dish %}
+                    Змініть інформацію про страву
+                {% else %}
+                    Додайте нову страву до меню
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        {% if error %}
+
+            <div class="admin-error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="admin-edit-form"
+        >
+
+            <div class="form-group">
+
+                <label for="name">
+                    Назва страви
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="{{ dish.name if dish else '' }}"
+                    placeholder="Наприклад: Карбонара"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="description">
+                    Опис
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Опишіть склад та особливості страви..."
+                    required
+                >{{ dish.description if dish else '' }}</textarea>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="price">
+                        Ціна (€)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        value="{{ dish.price if dish else '' }}"
+                        step="0.01"
+                        min="0"
+                        placeholder="14.00"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Категорія
+                    </label>
+
+                    <input
+                        type="text"
+                        id="category"
+                        name="category"
+                        value="{{ dish.category if dish else '' }}"
+                        placeholder="Наприклад: Паста"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="image">
+                    Фото страви
+                </label>
+
+                {% if dish and dish.image %}
+
+                    <div class="current-image">
+
+                        <p>
+                            Поточне фото
+                        </p>
+
+                        <img
+                            src="{{ url_for('static', filename='images/' + dish.image) }}"
+                            alt="{{ dish.name }}"
+                        >
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="image-upload">
+
+                    <input
+                        type="file"
+                        id="image"
+                        name="image"
+                        accept=".jpg,.jpeg,.png,.webp"
+                    >
+
+                    <label for="image" class="image-upload-label">
+
+                        <span class="upload-icon">
+                            📷
+                        </span>
+
+                        <span>
+                            {% if dish and dish.image %}
+                                Обрати нове фото
+                            {% else %}
+                                Обрати фото
+                            {% endif %}
+                        </span>
+
+                    </label>
+
+                </div>
+
+                <small>
+                    JPG, JPEG, PNG або WEBP. Максимальний розмір — 5 МБ.
+                </small>
+
+            </div>
+
+
+            <div class="image-preview-container">
+
+                <img
+                    id="image-preview"
+                    src=""
+                    alt="Попередній перегляд"
+                >
+
+            </div>
+
+
+            <div class="admin-edit-buttons">
+
+                <a
+                    href="{{ url_for('admin') }}"
+                    class="button secondary-button"
+                >
+                    ← Назад
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="button"
+                >
+
+                    {% if dish %}
+                        Зберегти зміни
+                    {% else %}
+                        Додати страву
+                    {% endif %}
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<script>
+
+const imageInput = document.getElementById("image");
+const imagePreview = document.getElementById("image-preview");
+
+imageInput.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (!file) {
+
+        imagePreview.style.display = "none";
+        imagePreview.src = "";
+
+        return;
+    }
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+
+        alert(
+            "Будь ласка, виберіть JPG, PNG або WEBP."
+        );
+
+        this.value = "";
+
+        imagePreview.style.display = "none";
+        imagePreview.src = "";
+
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+
+        imagePreview.src = event.target.result;
+
+        imagePreview.style.display = "block";
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+</script>
+
+{% endblock %}

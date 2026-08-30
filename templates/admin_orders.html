@@ -1,0 +1,224 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}
+VYBE — Історія замовлень
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-page">
+
+    <div class="admin-header">
+
+        <p class="hero-small">
+            VYBE RESTAURANT
+        </p>
+
+        <h1>
+            Історія замовлень
+        </h1>
+
+        <p>
+            Усі замовлення користувачів
+        </p>
+
+    </div>
+
+
+    {% if orders %}
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+                <div class="admin-order-card">
+
+                    <div class="order-top">
+
+                        <div>
+
+                            <h2>
+                                Замовлення №{{ order.id }}
+                            </h2>
+
+                            <p>
+                                Користувач:
+                                <strong>
+                                    {{ order.user.username }}
+                                </strong>
+                            </p>
+
+                            <p>
+                                Email:
+                                <strong>
+                                    {{ order.user.email }}
+                                </strong>
+                            </p>
+
+                        </div>
+
+
+                        <div class="order-status">
+
+                            <span>
+                                {{ order.status }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-date">
+
+                        {{ order.created_at.strftime("%d.%m.%Y %H:%M") }}
+
+                    </div>
+
+
+                    <div class="order-items">
+
+                        {% for item in order.items %}
+
+                            <div class="order-item">
+
+                                <div>
+
+                                    <strong>
+                                        {{ item.name }}
+                                    </strong>
+
+                                    <span>
+                                        × {{ item.quantity }}
+                                    </span>
+
+                                </div>
+
+                                <div>
+
+                                    €{{ "%.2f"|format(item.price * item.quantity) }}
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="order-bottom">
+
+                        <strong>
+                            Загальна сума:
+                            €{{ "%.2f"|format(order.total) }}
+                        </strong>
+
+
+                        <div class="order-controls">
+
+                            {% if order.status == "Нове" %}
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('admin_order_status', order_id=order.id) }}"
+                                >
+
+                                    <input
+                                        type="hidden"
+                                        name="status"
+                                        value="Скасовано"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="delete-button"
+                                    >
+                                        Скасувати
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
+
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('admin_order_status', order_id=order.id) }}"
+                            >
+
+                                <select name="status">
+
+                                    <option
+                                        value="Нове"
+                                        {% if order.status == "Нове" %}selected{% endif %}
+                                    >
+                                        Нове
+                                    </option>
+
+                                    <option
+                                        value="Виконується"
+                                        {% if order.status == "Виконується" %}selected{% endif %}
+                                    >
+                                        Виконується
+                                    </option>
+
+                                    <option
+                                        value="Виконано"
+                                        {% if order.status == "Виконано" %}selected{% endif %}
+                                    >
+                                        Виконано
+                                    </option>
+
+                                    <option
+                                        value="Скасовано"
+                                        {% if order.status == "Скасовано" %}selected{% endif %}
+                                    >
+                                        Скасовано
+                                    </option>
+
+                                </select>
+
+
+                                <button
+                                    type="submit"
+                                    class="button"
+                                >
+                                    Змінити статус
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="admin-empty">
+
+            <h2>
+                Замовлень поки немає
+            </h2>
+
+            <p>
+                Коли користувач оформить замовлення,
+                воно з'явиться тут.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+

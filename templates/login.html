@@ -9,55 +9,97 @@ VYBE — Вхід
 
 <section class="auth-page">
 
-    <div class="auth-box">
+    <div class="auth-container">
 
-        <h1>Вхід</h1>
+        <div class="auth-header">
 
-        <p>Увійдіть до свого акаунта VYBE</p>
+            <p class="hero-small">
+                VYBE RESTAURANT
+            </p>
+
+            <h1>
+                Вхід
+            </h1>
+
+            <p>
+                Увійдіть до свого акаунта
+            </p>
+
+        </div>
+
 
         {% if error %}
-            <p class="error">
+
+            <div class="auth-error">
                 {{ error }}
-            </p>
+            </div>
+
         {% endif %}
 
-        <form method="POST">
 
-            <label for="email">Email</label>
+        <form
+            method="POST"
+            class="auth-form"
+        >
 
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Введіть email"
-                required
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="your@email.com"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Пароль
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Введіть пароль"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="button auth-button"
             >
-
-            <label for="password">Пароль</label>
-
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Введіть пароль"
-                required
-            >
-
-            <button type="submit" class="button">
                 Увійти
             </button>
 
         </form>
 
-        <p class="auth-link">
 
-            Немає акаунта?
+        <div class="auth-footer">
 
-            <a href="{{ url_for('register') }}">
+            <p>
+                Ще немає акаунта?
+            </p>
+
+            <a
+                href="{{ url_for('register') }}"
+                class="auth-link"
+            >
                 Зареєструватися
             </a>
 
-        </p>
+        </div>
 
     </div>
 

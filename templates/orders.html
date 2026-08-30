@@ -1,0 +1,170 @@
+
+
+
+{% extends "base.html" %}
+
+{% block title %}
+VYBE — Мої замовлення
+{% endblock %}
+
+{% block content %}
+
+<section class="orders-page">
+
+    <div class="orders-header">
+
+        <p class="hero-small">
+            VYBE RESTAURANT
+        </p>
+
+        <h1>
+            Мої замовлення
+        </h1>
+
+        <p>
+            Історія ваших замовлень
+        </p>
+
+    </div>
+
+
+    {% if orders %}
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+                <div class="order-card">
+
+                    <div class="order-card-header">
+
+                        <div>
+
+                            <p class="order-label">
+                                ЗАМОВЛЕННЯ
+                            </p>
+
+                            <h2>
+                                №{{ order.id }}
+                            </h2>
+
+                        </div>
+
+
+                        <div class="order-status
+                            {% if order.status == 'Нове' %}
+                                status-new
+                            {% elif order.status == 'Виконується' %}
+                                status-working
+                            {% elif order.status == 'Виконано' %}
+                                status-done
+                            {% elif order.status == 'Скасовано' %}
+                                status-cancelled
+                            {% endif %}
+                        ">
+
+                            {{ order.status }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-date">
+
+                        {{ order.created_at.strftime("%d.%m.%Y о %H:%M") }}
+
+                    </div>
+
+
+                    <div class="order-divider"></div>
+
+
+                    <div class="order-items">
+
+                        {% for item in order.items %}
+
+                            <div class="order-item">
+
+                                <div class="order-item-info">
+
+                                    <strong>
+                                        {{ item.name }}
+                                    </strong>
+
+                                    <span>
+                                        {{ item.quantity }} ×
+                                        €{{ "%.2f"|format(item.price) }}
+                                    </span>
+
+                                </div>
+
+
+                                <strong class="order-item-total">
+
+                                    €{{ "%.2f"|format(
+                                        item.price * item.quantity
+                                    ) }}
+
+                                </strong>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="order-divider"></div>
+
+
+                    <div class="order-bottom">
+
+                        <span>
+                            Загальна сума
+                        </span>
+
+                        <strong>
+                            €{{ "%.2f"|format(order.total) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="orders-empty">
+
+            <div class="empty-icon">
+                🍽
+            </div>
+
+            <h2>
+                Замовлень ще немає
+            </h2>
+
+            <p>
+                Ви ще нічого не замовляли.
+                Оберіть щось смачне з нашого меню!
+            </p>
+
+            <a
+                href="{{ url_for('menu') }}"
+                class="button"
+            >
+                Перейти до меню
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
+

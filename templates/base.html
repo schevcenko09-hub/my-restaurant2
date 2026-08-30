@@ -4,69 +4,106 @@
 <html lang="uk">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>
-        {% block title %}VYBE Restaurant{% endblock %}
+        {% block title %}
+        VYBE
+        {% endblock %}
     </title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/styles.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+
 </head>
 
 <body>
 
-<header class="header">
+<header>
 
-    <nav class="navbar">
+    <nav>
 
-        <a href="{{ url_for('index') }}" class="logo">
+        <!-- Логотип / Головна -->
+        <a href="{{ url_for('index') }}">
             VYBE
         </a>
 
-        <div class="nav-links">
+        <a href="{{ url_for('index') }}">
+    Головна
+        </a>
 
-            <a href="{{ url_for('index') }}">
-                Головна
+        <!-- Меню -->
+        <a href="{{ url_for('menu') }}">
+            Меню
+        </a>
+
+
+        {% if session.get("is_admin") %}
+
+            
+
+            <a href="{{ url_for('admin') }}">
+                Адмін-панель
             </a>
 
-            <a href="{{ url_for('menu') }}">
-                Меню
+            
+
+            <a href="{{ url_for('admin_logout') }}">
+                Вийти з адмінки
             </a>
+
+
+        {% elif session.get("user_id") %}
+
+            <!-- ========================= -->
+            <!-- НАВІГАЦІЯ КОРИСТУВАЧА -->
+            <!-- ========================= -->
 
             <a href="{{ url_for('cart') }}">
                 Кошик
             </a>
 
-            {% if session.get("user_id") %}
+            <a href="{{ url_for('orders') }}">
+                Мої замовлення
+            </a>
 
-                <a href="{{ url_for('profile') }}">
-                    Профіль
-                </a>
+            <a href="{{ url_for('profile') }}">
+                Профіль
+            </a>
 
-                <a href="{{ url_for('logout') }}">
-                    Вийти
-                </a>
+            <a href="{{ url_for('logout') }}">
+                Вийти
+            </a>
 
-            {% else %}
 
-                <a href="{{ url_for('login') }}">
-                    Увійти
-                </a>
+        {% else %}
 
-                <a href="{{ url_for('register') }}">
-                    Реєстрація
-                </a>
+            <!-- ========================= -->
+            <!-- НЕАВТОРИЗОВАНИЙ КОРИСТУВАЧ -->
+            <!-- ========================= -->
 
-            {% endif %}
+            <a href="{{ url_for('login') }}">
+                Увійти
+            </a>
 
-        </div>
+            <a href="{{ url_for('register') }}">
+                Реєстрація
+            </a>
+
+        {% endif %}
 
     </nav>
 
 </header>
+
 
 <main>
 
@@ -75,15 +112,7 @@
 
 </main>
 
-<footer class="footer">
-
-    <p>
-        © 2026 VYBE Restaurant
-    </p>
-
-</footer>
 
 </body>
 
 </html>
-

@@ -1,4 +1,5 @@
 
+
 {% extends "base.html" %}
 
 {% block title %}
@@ -7,125 +8,101 @@ VYBE — Кошик
 
 {% block content %}
 
-<section class="menu-page">
+<section class="cart-page">
 
-    <div class="menu-header">
+<div class="cart-header">
+    <p class="hero-small">VYBE RESTAURANT</p>
+    <h1>Ваш кошик</h1>
+    <p>Перевірте своє замовлення перед підтвердженням</p>
+</div>
 
-        <p class="hero-small">
-            VYBE RESTAURANT
-        </p>
+{% if items %}
 
-        <h1>Ваш кошик</h1>
+    <div class="cart-list">
 
-    </div>
+        {% for item in items %}
 
-    {% if items %}
+            <div class="cart-item">
 
-        <div class="menu-grid">
+                <div class="cart-item-info">
+                    <h3>{{ item.name }}</h3>
+                    <p>€{{ "%.2f"|format(item.price) }} за штуку</p>
+                </div>
 
-            {% for item in items %}
+                <div class="cart-quantity">
 
-                <div class="menu-card">
-
-                    <h3>
-                        {{ item.name }}
-                    </h3>
-
-                    <p>
-                        Кількість: {{ item.quantity }}
-                    </p>
-
-                    <span>
-                        €{{ item.price }}
-                    </span>
-
-                    <p>
-                        Сума: €{{ "%.2f"|format(item.price * item.quantity) }}
-                    </p>
-
-                    <form
-                        method="POST"
-                        action="{{ url_for('decrease_cart', item_id=item.id) }}"
-                    >
-                        <button type="submit" class="button">
-                            −
-                        </button>
+                    <form method="POST" action="{{ url_for('decrease_cart', item_id=item.id) }}">
+                        <button type="submit">−</button>
                     </form>
 
-                    <form
-                        method="POST"
-                        action="{{ url_for('increase_cart', item_id=item.id) }}"
-                    >
-                        <button type="submit" class="button">
-                            +
-                        </button>
-                    </form>
+                    <span>{{ item.quantity }}</span>
 
-                    <form
-                        method="POST"
-                        action="{{ url_for('remove_from_cart', item_id=item.id) }}"
-                    >
-                        <button type="submit" class="button">
-                            Видалити
-                        </button>
+                    <form method="POST" action="{{ url_for('increase_cart', item_id=item.id) }}">
+                        <button type="submit">+</button>
                     </form>
 
                 </div>
 
-            {% endfor %}
+                <div class="cart-item-total">
+                    €{{ "%.2f"|format(item.price * item.quantity) }}
+                </div>
 
-        </div>
+                <form method="POST" action="{{ url_for('remove_from_cart', item_id=item.id) }}">
+                    <button type="submit" class="remove-button">
+                        Видалити
+                    </button>
+                </form>
 
-        <div class="menu-header">
+            </div>
 
-            <h2>
-                Разом: €{{ "%.2f"|format(total) }}
-            </h2>
+        {% endfor %}
 
-            <form
-                method="POST"
-                action="{{ url_for('clear_cart') }}"
-            >
+    </div>
+
+    <div class="cart-summary">
+
+        <h2>
+            Разом: €{{ "%.2f"|format(total) }}
+        </h2>
+
+        <div class="cart-buttons">
+
+            <a href="{{ url_for('menu') }}" class="button">
+                ← Повернутися до меню
+            </a>
+
+            <form method="POST" action="{{ url_for('create_order') }}">
+                <button type="submit" class="button">
+                    Підтвердити замовлення
+                </button>
+            </form>
+
+            <form method="POST" action="{{ url_for('clear_cart') }}">
                 <button type="submit" class="button">
                     Очистити кошик
                 </button>
             </form>
 
-            <br>
-
-            <a
-                href="{{ url_for('menu') }}"
-                class="button"
-            >
-                Продовжити покупки
-            </a>
-
         </div>
 
-    {% else %}
+    </div>
 
-        <div class="menu-header">
+{% else %}
 
-            <h2>
-                Ваш кошик порожній
-            </h2>
+    <div class="empty-cart">
 
-            <p>
-                Додайте щось смачненьке з нашого меню.
-            </p>
+        <h2>Ваш кошик порожній</h2>
 
-            <br>
+        <p>Додайте щось смачне з нашого меню.</p>
 
-            <a
-                href="{{ url_for('menu') }}"
-                class="button"
-            >
-                Перейти до меню
-            </a>
+        <a href="{{ url_for('menu') }}" class="button">
+            ← Перейти до меню
+        </a>
 
-        </div>
+    </div>
 
-    {% endif %}
+{% endif %}
+
 
 </section>
 

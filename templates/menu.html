@@ -1,4 +1,6 @@
 
+
+
 {% extends "base.html" %}
 
 {% block title %}
@@ -10,290 +12,108 @@ VYBE — Меню
 <section class="menu-page">
 
     <div class="menu-header">
-        <p class="hero-small">VYBE RESTAURANT</p>
-        <h1>Наше меню</h1>
-        <p>Оберіть свою улюблену страву</p>
+
+        <p class="hero-small">
+            VYBE RESTAURANT
+        </p>
+
+        <h1>
+            Наше меню
+        </h1>
+
+        <p>
+            Оберіть свою улюблену страву
+        </p>
+
     </div>
 
 
-    <section class="menu-section">
+    {% if categories %}
 
-        <h2>Закуски</h2>
+        {% for category, dishes in categories.items() %}
 
-        <div class="menu-grid">
+        <section class="menu-section">
 
-            <div class="menu-card">
-                <h3>Брускетта  з томатами</h3>
-                <p>Хрусткий хліб, томати, базилік та оливкова олія.</p>
-                <span>€8</span>
-                <a href="{{ url_for('dish', dish_id='bruschetta') }}" class="button">
-                    Переглянути страву
-                </a>
+            <div class="menu-section-header">
+
+                <h2>
+                    {{ category }}
+                </h2>
+
+                <div class="menu-line"></div>
+
             </div>
 
-            <div class="menu-card">
-                <h3>Буррата з томатами</h3>
-                <p>Ніжна буррата, свіжі томати та базилік.</p>
-                <span>€11</span>
-                <a href="{{ url_for('dish', dish_id='burrata') }}" class="button">
-                    Переглянути страву
-                </a>
+
+            <div class="menu-grid">
+
+                {% for dish in dishes %}
+
+                <div class="menu-card">
+
+                    <div class="menu-card-content">
+
+                        <div class="menu-card-top">
+
+                            <h3>
+                                {{ dish.name }}
+                            </h3>
+
+                            <span class="menu-price">
+                                €{{ "%.2f"|format(dish.price) }}
+                            </span>
+
+                        </div>
+
+
+                        <p class="menu-description">
+                            {{ dish.description }}
+                        </p>
+
+
+                        <div class="menu-card-bottom">
+
+                            <span class="menu-category">
+                                {{ dish.category }}
+                            </span>
+
+                            <a
+                                href="{{ url_for('dish', dish_id=dish.id) }}"
+                                class="button"
+                            >
+                                Переглянути
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
             </div>
 
-            <div class="menu-card">
-                <h3>Карпачо з яловичини</h3>
-                <p>Тонко нарізана яловичина, пармезан та рукола.</p>
-                <span>€13</span>
-                <a href="{{ url_for('dish', dish_id='carpaccio') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
+        </section>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="admin-empty">
+
+            <h2>
+                Меню поки порожнє
+            </h2>
+
+            <p>
+                Незабаром тут з'являться наші страви.
+            </p>
 
         </div>
 
-    </section>
-
-
-    <section class="menu-section">
-
-        <h2>Паста</h2>
-
-        <div class="menu-grid">
-
-            <div class="menu-card">
-                <h3>Карбонара</h3>
-                <p>Паста, бекон, пармезан та вершковий соус.</p>
-                <span>€14</span>
-                <a href="{{ url_for('dish', dish_id='carbonara') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Куряча паста</h3>
-                <p>Паста з куркою, грибами та вершковим соусом.</p>
-                <span>€15</span>
-                <a href="{{ url_for('dish', dish_id='chicken_pasta') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Трюфельна паста</h3>
-                <p>Паста з трюфельним соусом та пармезаном.</p>
-                <span>€16</span>
-                <a href="{{ url_for('dish', dish_id='truffle_pasta') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="menu-section">
-
-        <h2>Піца</h2>
-
-        <div class="menu-grid">
-
-            <div class="menu-card">
-                <h3>Маргарита</h3>
-                <p>Томатний соус, моцарела та базилік.</p>
-                <span>€11</span>
-                <a href="{{ url_for('dish', dish_id='margherita') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Пепероні</h3>
-                <p>Томатний соус, моцарела та пепероні.</p>
-                <span>€13</span>
-                <a href="{{ url_for('dish', dish_id='pepperoni') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Чотири сира</h3>
-                <p>Моцарела, пармезан, горгонзола та чедер.</p>
-                <span>€14</span>
-                <a href="{{ url_for('dish', dish_id='four_cheese') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="menu-section">
-
-        <h2>Основні страви</h2>
-
-        <div class="menu-grid">
-
-            <div class="menu-card">
-                <h3>Лосось з овочами</h3>
-                <p>Запечений лосось, сезонні овочі та соус.</p>
-                <span>€21</span>
-                <a href="{{ url_for('dish', dish_id='salmon') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Куряче філе</h3>
-                <p>Куряче філе, картопля та соус.</p>
-                <span>€17</span>
-                <a href="{{ url_for('dish', dish_id='chicken') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Яловичий стейк</h3>
-                <p>Соковитий стейк з картоплею та овочами.</p>
-                <span>€24</span>
-                <a href="{{ url_for('dish', dish_id='steak') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="menu-section">
-
-        <h2>Бургери</h2>
-
-        <div class="menu-grid">
-
-            <div class="menu-card">
-                <h3>Класичний бургер</h3>
-                <p>Яловичина, сир, салат, томати та соус.</p>
-                <span>€14</span>
-                <a href="{{ url_for('dish', dish_id='classic_burger') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Чізбургер</h3>
-                <p>Яловичина, подвійний сир та спеціальний соус.</p>
-                <span>€15</span>
-                <a href="{{ url_for('dish', dish_id='cheeseburger') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Курячий бургер</h3>
-                <p>Хрустка курка, салат та соус.</p>
-                <span>€14</span>
-                <a href="{{ url_for('dish', dish_id='chicken_burger') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="menu-section">
-
-        <h2>Десерти</h2>
-
-        <div class="menu-grid">
-
-            <div class="menu-card">
-                <h3>Тірамісу</h3>
-                <p>Класичний італійський десерт.</p>
-                <span>€7</span>
-                <a href="{{ url_for('dish', dish_id='tiramisu') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Чізкейк</h3>
-                <p>Ніжний сирний десерт з ягідним соусом.</p>
-                <span>€7</span>
-                <a href="{{ url_for('dish', dish_id='cheesecake') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Шоколадний фондан</h3>
-                <p>Шоколадний фондан з ванільним морозивом.</p>
-                <span>€8</span>
-                <a href="{{ url_for('dish', dish_id='fondant') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="menu-section">
-
-        <h2>Напої</h2>
-
-        <div class="menu-grid">
-
-            <div class="menu-card">
-                <h3>Кава</h3>
-                <p>Еспресо, американо, капучино або латте.</p>
-                <span>€3</span>
-                <a href="{{ url_for('dish', dish_id='coffee') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Чай</h3>
-                <p>Зелений, чорний або трав'яний чай.</p>
-                <span>€2</span>
-                <a href="{{ url_for('dish', dish_id='tea') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Сік</h3>
-                <p>Апельсиновий або яблучний сік.</p>
-                <span>€4</span>
-                <a href="{{ url_for('dish', dish_id='juice') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-            <div class="menu-card">
-                <h3>Вода</h3>
-                <p>Пляшкова або газована вода.</p>
-                <span>€2</span>
-                <a href="{{ url_for('dish', dish_id='water') }}" class="button">
-                    Переглянути страву
-                </a>
-            </div>
-
-        </div>
-
-    </section>
+    {% endif %}
 
 </section>
 
 {% endblock %}
-
-
-
-
