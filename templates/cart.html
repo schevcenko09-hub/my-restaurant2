@@ -10,99 +10,232 @@ VYBE — Кошик
 
 <section class="cart-page">
 
-<div class="cart-header">
-    <p class="hero-small">VYBE RESTAURANT</p>
-    <h1>Ваш кошик</h1>
-    <p>Перевірте своє замовлення перед підтвердженням</p>
-</div>
+    <div class="container">
 
-{% if items %}
+        <div class="cart-header text-center">
 
-    <div class="cart-list">
+            <p class="hero-small">
+                VYBE RESTAURANT
+            </p>
 
-        {% for item in items %}
+            <h1>
+                Ваш кошик
+            </h1>
+
+            <p>
+                Перевірте замовлення перед підтвердженням.
+            </p>
+
+        </div>
+
+
+        {% if items %}
+
+        <div class="cart-list">
+
+            {% for item in items %}
 
             <div class="cart-item">
 
                 <div class="cart-item-info">
-                    <h3>{{ item.name }}</h3>
-                    <p>€{{ "%.2f"|format(item.price) }} за штуку</p>
+
+                    <h3>
+                        {{ item.name }}
+                    </h3>
+
+                    <p>
+                        €{{ "%.2f"|format(item.price) }}
+                        за штуку
+                    </p>
+
                 </div>
+
 
                 <div class="cart-quantity">
 
-                    <form method="POST" action="{{ url_for('decrease_cart', item_id=item.id) }}">
-                        <button type="submit">−</button>
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'decrease_cart',
+                            item_id=item.id
+                        ) }}"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
+                        <button type="submit">
+                            −
+                        </button>
+
                     </form>
 
-                    <span>{{ item.quantity }}</span>
 
-                    <form method="POST" action="{{ url_for('increase_cart', item_id=item.id) }}">
-                        <button type="submit">+</button>
+                    <span>
+                        {{ item.quantity }}
+                    </span>
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'increase_cart',
+                            item_id=item.id
+                        ) }}"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
+                        <button type="submit">
+                            +
+                        </button>
+
                     </form>
 
                 </div>
+
 
                 <div class="cart-item-total">
-                    €{{ "%.2f"|format(item.price * item.quantity) }}
+
+                    €{{ "%.2f"|format(
+                        item.price * item.quantity
+                    ) }}
+
                 </div>
 
-                <form method="POST" action="{{ url_for('remove_from_cart', item_id=item.id) }}">
-                    <button type="submit" class="remove-button">
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'remove_from_cart',
+                        item_id=item.id
+                    ) }}"
+                >
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
+
+                    <button
+                        type="submit"
+                        class="remove-button"
+                    >
                         Видалити
                     </button>
+
                 </form>
 
             </div>
 
-        {% endfor %}
-
-    </div>
-
-    <div class="cart-summary">
-
-        <h2>
-            Разом: €{{ "%.2f"|format(total) }}
-        </h2>
-
-        <div class="cart-buttons">
-
-            <a href="{{ url_for('menu') }}" class="button">
-                ← Повернутися до меню
-            </a>
-
-            <form method="POST" action="{{ url_for('create_order') }}">
-                <button type="submit" class="button">
-                    Підтвердити замовлення
-                </button>
-            </form>
-
-            <form method="POST" action="{{ url_for('clear_cart') }}">
-                <button type="submit" class="button">
-                    Очистити кошик
-                </button>
-            </form>
+            {% endfor %}
 
         </div>
 
+
+        <div class="cart-summary">
+
+            <div class="cart-total-block">
+
+                <span>
+                    Разом
+                </span>
+
+                <strong>
+                    €{{ "%.2f"|format(total) }}
+                </strong>
+
+            </div>
+
+
+            <div class="cart-buttons">
+
+                <a
+                    href="{{ url_for('menu') }}"
+                    class="button cart-back-button"
+                >
+                    ← До меню
+                </a>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for('create_order') }}"
+                >
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
+
+                    <button
+                        type="submit"
+                        class="button cart-confirm-button"
+                    >
+                        Підтвердити замовлення
+                    </button>
+
+                </form>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for('clear_cart') }}"
+                >
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
+
+                    <button
+                        type="submit"
+                        class="button cart-clear-button"
+                    >
+                        Очистити кошик
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-cart text-center">
+
+            <h2>
+                Ваш кошик порожній
+            </h2>
+
+            <p>
+                Додайте щось смачне з нашого меню.
+            </p>
+
+            <a
+                href="{{ url_for('menu') }}"
+                class="button"
+            >
+                Перейти до меню
+            </a>
+
+        </div>
+
+        {% endif %}
+
     </div>
-
-{% else %}
-
-    <div class="empty-cart">
-
-        <h2>Ваш кошик порожній</h2>
-
-        <p>Додайте щось смачне з нашого меню.</p>
-
-        <a href="{{ url_for('menu') }}" class="button">
-            ← Перейти до меню
-        </a>
-
-    </div>
-
-{% endif %}
-
 
 </section>
 

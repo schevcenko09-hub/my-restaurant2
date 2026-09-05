@@ -8,80 +8,137 @@ VYBE — {{ dish.name }}
 
 {% block content %}
 
-<section class="dish-page">
+<section class="dish-page py-5">
 
-    <div class="dish-card">
-
-        <div class="dish-category">
-            {{ dish.category }}
-        </div>
-
-        <h1>
-            {{ dish.name }}
-        </h1>
-
-        <div class="dish-line"></div>
-
-        <p class="dish-description">
-            {{ dish.description }}
-        </p>
-
-        <div class="dish-bottom">
-
-            <div class="dish-price">
-                €{{ "%.2f"|format(dish.price) }}
-            </div>
-
-            {% if session.get("user_id") %}
-
-                <form
-                    method="POST"
-                    action="{{ url_for('add_to_cart') }}"
-                >
-
-                    <input
-                        type="hidden"
-                        name="dish_id"
-                        value="{{ dish.id }}"
-                    >
-
-                    <button
-                        type="submit"
-                        class="dish-cart-button"
-                    >
-                        Додати до кошика
-                    </button>
-
-                </form>
-
-            {% else %}
-
-                <a
-                    href="{{ url_for('login') }}"
-                    class="dish-cart-button"
-                >
-                    Увійдіть, щоб замовити
-                </a>
-
-            {% endif %}
-
-        </div>
-
-    </div>
-
-
-    <div class="dish-navigation">
+    <div class="container">
 
         <a
             href="{{ url_for('menu') }}"
-            class="dish-back-button"
+            class="back-link"
         >
             ← Повернутися до меню
         </a>
+
+        
+
+        <div class="row g-5 align-items-center mt-2">
+
+            <!-- IMAGE -->
+
+            <div class="col-12 col-lg-6">
+
+                <div class="dish-image-wrapper">
+
+                    {% if dish.image %}
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/uploads/' + dish.image
+                        ) }}"
+                        alt="{{ dish.name }}"
+                        class="dish-image"
+                    >
+
+                    {% else %}
+
+                    <div class="dish-no-image">
+                        VYBE
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- INFO -->
+
+            <div class="col-12 col-lg-6">
+
+                <div class="dish-info">
+
+                    <span class="menu-category-badge">
+                        {{ dish.category }}
+                    </span>
+
+                    <p class="hero-small mt-3">
+                        VYBE RESTAURANT
+                    </p>
+
+                    <h1>
+                        {{ dish.name }}
+                    </h1>
+
+                    <p class="dish-description">
+                        {{ dish.description }}
+                    </p>
+
+
+                    <!-- PRICE -->
+
+                    <div class="dish-price-box">
+
+                        <span>
+                            Ціна
+                        </span>
+
+                        <strong>
+                            €{{ "%.2f"|format(dish.price) }}
+                        </strong>
+
+                    </div>
+
+
+                    {% if session.get("user_id") %}
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('add_to_cart') }}"
+                        class="mt-4"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="dish_id"
+                            value="{{ dish.id }}"
+                        >
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger btn-lg w-100"
+                        >
+                            Додати до кошика
+                        </button>
+
+                    </form>
+
+                    {% else %}
+
+                    <a
+                        href="{{ url_for('login') }}"
+                        class="btn btn-danger btn-lg w-100 mt-4"
+                    >
+                        Увійдіть, щоб замовити
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
 </section>
 
 {% endblock %}
-

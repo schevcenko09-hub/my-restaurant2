@@ -11,45 +11,74 @@ VYBE — Реєстрація
 
     <div class="auth-box">
 
-        <h1>Реєстрація</h1>
+        <p class="hero-small">
+            VYBE
+        </p>
 
-        <p>Створіть свій акаунт VYBE</p>
-{% if error %}
-    <p class="error">
-        {{ error }}
-    </p>
-{% endif %}
+        <h1>
+            Реєстрація
+        </h1>
+
+        <p>
+            Створіть акаунт, щоб замовляти онлайн.
+        </p>
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
 
         <form method="POST">
 
-            <label for="name">Ім'я</label>
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <label for="name">
+                Ім'я
+            </label>
+
             <input
                 type="text"
                 id="name"
                 name="name"
-                placeholder="Введіть ім'я"
+                placeholder="Ваше ім'я"
                 required
             >
 
-            <label for="email">Email</label>
+            <label for="email">
+                Email
+            </label>
+
             <input
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Введіть email"
+                placeholder="your@email.com"
                 required
             >
 
-            <label for="password">Пароль</label>
+            <label for="password">
+                Пароль
+            </label>
+
             <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Створіть пароль"
+                placeholder="Мінімум 8 символів"
                 required
             >
 
-            <label for="password2">Підтвердження пароля</label>
+            <label for="password2">
+                Повторіть пароль
+            </label>
+
             <input
                 type="password"
                 id="password2"
@@ -58,7 +87,10 @@ VYBE — Реєстрація
                 required
             >
 
-            <button type="submit" class="button">
+            <button
+                type="submit"
+                class="button"
+            >
                 Зареєструватися
             </button>
 
@@ -76,4 +108,3 @@ VYBE — Реєстрація
 </section>
 
 {% endblock %}
-

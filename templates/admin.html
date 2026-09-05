@@ -8,184 +8,203 @@ VYBE — Адмін-панель
 
 {% block content %}
 
-<section class="vybe-admin">
+<section class="admin-page py-5">
 
-<div class="admin-container">
+    <div class="container">
 
-    <div class="admin-hero">
+        <!-- HEADER -->
+        <div class="admin-header text-center mb-5">
 
-        <div>
-            <p class="admin-label">
-                VYBE RESTAURANT
-            </p>
+            <span class="admin-label">
+                VYBE ADMIN
+            </span>
 
-            <h1>
+            <h1 class="display-4 fw-bold mt-3">
                 Адмін-панель
             </h1>
 
-            <p class="admin-description">
-                Керуйте меню ресторану, стравами та замовленнями.
-            </p>
-        </div>
-
-        <div class="admin-badge">
-            <span>●</span>
-            Адміністратор
-        </div>
-
-    </div>
-
-
-    <!-- КНОПКИ АДМІН-ПАНЕЛІ -->
-
-    <div class="admin-navigation">
-
-        <a
-            href="{{ url_for('admin_add') }}"
-            class="admin-nav-button primary"
-        >
-            <span>＋</span>
-            Додати страву
-        </a>
-
-        <a
-            href="{{ url_for('admin_orders') }}"
-            class="admin-nav-button"
-        >
-            <span>▣</span>
-            Історія замовлень
-        </a>
-
-        <a
-            href="{{ url_for('admin_logout') }}"
-            class="admin-nav-button logout"
-        >
-            Вийти з адмінки
-        </a>
-
-    </div>
-
-
-    <!-- СТРАВИ -->
-
-    <div class="admin-section-header">
-
-        <div>
-            <p class="section-label">
-                МЕНЮ РЕСТОРАНУ
+            <p class="lead text-muted">
+                Керування меню ресторану
             </p>
 
-            <h2>
-                Ваші страви
-            </h2>
         </div>
 
-        <span class="dish-count">
-            {{ dishes|length }} страв
-        </span>
 
-    </div>
+        <!-- ACTIONS -->
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
 
+            <a
+                href="{{ url_for('admin_add') }}"
+                class="btn btn-danger btn-lg px-4"
+            >
+                + Додати страву
+            </a>
 
-    {% if dishes %}
+            <a
+                href="{{ url_for('admin_orders') }}"
+                class="btn btn-outline-dark btn-lg px-4"
+            >
+                Історія замовлень
+            </a>
 
-    <div class="admin-dishes-grid">
-
-        {% for dish in dishes %}
-
-        <article class="admin-dish-card">
-
-            <div class="dish-card-top">
-
-                <span class="dish-category">
-                    {{ dish.category }}
-                </span>
-
-                <span class="dish-number">
-                    #{{ dish.id }}
-                </span>
-
-            </div>
+        </div>
 
 
-            <div class="dish-card-content">
+        {% if dishes %}
 
-                <h3>
-                    {{ dish.name }}
-                </h3>
+        <!-- DISHES -->
+        <div class="row g-4">
 
-                <p>
-                    {{ dish.description }}
-                </p>
+            {% for dish in dishes %}
 
-                <div class="dish-price">
-                    €{{ "%.2f"|format(dish.price) }}
+            <div class="col-12 col-md-6 col-xl-4">
+
+                <div class="admin-dish-card h-100">
+
+                    <!-- IMAGE -->
+
+                    {% if dish.image %}
+
+                    <div class="admin-dish-image">
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='images/uploads/' + dish.image
+                            ) }}"
+                            alt="{{ dish.name }}"
+                        >
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="admin-dish-image admin-no-image">
+
+                        <span>
+                            VYBE
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- CONTENT -->
+
+                    <div class="p-4 d-flex flex-column h-100">
+
+                        <span class="badge bg-light text-dark align-self-start mb-3">
+                            {{ dish.category }}
+                        </span>
+
+                        <h2 class="admin-dish-title">
+                            {{ dish.name }}
+                        </h2>
+
+                        <p class="admin-dish-description">
+                            {{ dish.description }}
+                        </p>
+
+
+                        <div class="mt-auto">
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                                <span class="admin-price">
+                                    €{{ "%.2f"|format(dish.price) }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- BUTTONS -->
+
+                            <div class="d-flex gap-2">
+
+                                <a
+                                    href="{{ url_for(
+                                        'admin_edit',
+                                        dish_id=dish.id
+                                    ) }}"
+                                    class="btn btn-dark flex-grow-1"
+                                >
+                                    Редагувати
+                                </a>
+
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin_delete',
+                                        dish_id=dish.id
+                                    ) }}"
+                                    class="m-0"
+                                    onsubmit="return confirm(
+                                        'Ви впевнені, що хочете видалити цю страву?'
+                                    );"
+                                >
+
+                                    <input
+                                        type="hidden"
+                                        name="csrf_token"
+                                        value="{{ csrf_token() }}"
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-danger"
+                                        title="Видалити"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
 
+            {% endfor %}
 
-            <div class="dish-card-actions">
-
-                <a
-                    href="{{ url_for('admin_edit', dish_id=dish.id) }}"
-                    class="edit-button"
-                >
-                    Редагувати
-                </a>
-
-
-                <form
-                    method="POST"
-                    action="{{ url_for('admin_delete', dish_id=dish.id) }}"
-                    onsubmit="return confirm('Ви точно хочете видалити цю страву?');"
-                >
-
-                    <button
-                        type="submit"
-                        class="delete-button"
-                    >
-                        Видалити
-                    </button>
-
-                </form>
-
-            </div>
-
-        </article>
-
-        {% endfor %}
-
-    </div>
-
-    {% else %}
-
-    <div class="admin-empty">
-
-        <div class="empty-icon">
-            +
         </div>
 
-        <h2>
-            Страв поки немає
-        </h2>
+        {% else %}
 
-        <p>
-            Додайте першу страву до меню ресторану.
-        </p>
+        <!-- EMPTY -->
 
-        <a
-            href="{{ url_for('admin_add') }}"
-            class="admin-nav-button primary"
-        >
-            ＋ Додати першу страву
-        </a>
+        <div class="admin-empty text-center py-5">
+
+            <div class="empty-icon">
+                🍽
+            </div>
+
+            <h2 class="fw-bold mt-3">
+                Страв поки немає
+            </h2>
+
+            <p class="text-muted">
+                Додайте першу страву до меню.
+            </p>
+
+            <a
+                href="{{ url_for('admin_add') }}"
+                class="btn btn-danger btn-lg mt-3"
+            >
+                Додати страву
+            </a>
+
+        </div>
+
+        {% endif %}
 
     </div>
-
-    {% endif %}
-
-</div>
 
 </section>
 

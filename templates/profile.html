@@ -7,29 +7,71 @@ VYBE — Профіль
 
 {% block content %}
 
-<section class="auth-page">
+<section class="profile-page">
 
-    <div class="auth-box">
+    <div class="profile-container">
 
-        <h1>Мій профіль</h1>
+        <div class="profile-header">
 
-        <p>Вітаємо у VYBE, {{ username }}!</p>
-
-        <div>
-            <p>
-                <strong>Ім'я:</strong>
-                {{ username }}
+            <p class="hero-small">
+                VYBE ACCOUNT
             </p>
 
+            <h1>
+                Мій профіль
+            </h1>
+
             <p>
-                <strong>Email:</strong>
-                {{ email }}
+                Інформація про ваш акаунт.
             </p>
+
         </div>
 
-        <a href="{{ url_for('logout') }}" class="button">
-            Вийти з акаунта
-        </a>
+        <div class="profile-card">
+
+            <div class="profile-row">
+
+                <span>
+                    Ім'я
+                </span>
+
+                <strong>
+                    {{ username }}
+                </strong>
+
+            </div>
+
+            <div class="profile-row">
+
+                <span>
+                    Email
+                </span>
+
+                <strong>
+                    {{ email }}
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+
+            <a
+                href="{{ url_for('orders') }}"
+                class="button"
+            >
+                Мої замовлення
+            </a>
+
+            <a
+                href="{{ url_for('menu') }}"
+                class="button button-light"
+            >
+                Перейти до меню
+            </a>
+
+        </div>
 
     </div>
 

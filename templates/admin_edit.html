@@ -1,228 +1,348 @@
 
 
-     {% extends "base.html" %}
+  {% extends "base.html" %}
 
 {% block title %}
-VYBE — {% if dish %}Редагування страви{% else %}Нова страва{% endif %}
+VYBE — {% if dish %}Редагування{% else %}Нова страва{% endif %}
 {% endblock %}
 
 {% block content %}
 
-<section class="admin-edit-page">
+<section class="admin-edit-page py-5">
 
-    <div class="admin-edit-container">
+    <div class="container">
 
-        <div class="admin-edit-header">
+        <div class="row justify-content-center">
 
-            <p class="hero-small">
-                VYBE RESTAURANT
-            </p>
+            <div class="col-12 col-lg-9 col-xl-8">
 
-            <h1>
-                {% if dish %}
-                    Редагування страви
-                {% else %}
-                    Додати страву
-                {% endif %}
-            </h1>
-
-            <p>
-                {% if dish %}
-                    Змініть інформацію про страву
-                {% else %}
-                    Додайте нову страву до меню
-                {% endif %}
-            </p>
-
-        </div>
-
-
-        {% if error %}
-
-            <div class="admin-error">
-                {{ error }}
-            </div>
-
-        {% endif %}
-
-
-        <form
-            method="POST"
-            enctype="multipart/form-data"
-            class="admin-edit-form"
-        >
-
-            <div class="form-group">
-
-                <label for="name">
-                    Назва страви
-                </label>
-
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value="{{ dish.name if dish else '' }}"
-                    placeholder="Наприклад: Карбонара"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="description">
-                    Опис
-                </label>
-
-                <textarea
-                    id="description"
-                    name="description"
-                    placeholder="Опишіть склад та особливості страви..."
-                    required
-                >{{ dish.description if dish else '' }}</textarea>
-
-            </div>
-
-
-            <div class="form-row">
-
-                <div class="form-group">
-
-                    <label for="price">
-                        Ціна (€)
-                    </label>
-
-                    <input
-                        type="number"
-                        id="price"
-                        name="price"
-                        value="{{ dish.price if dish else '' }}"
-                        step="0.01"
-                        min="0"
-                        placeholder="14.00"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="category">
-                        Категорія
-                    </label>
-
-                    <input
-                        type="text"
-                        id="category"
-                        name="category"
-                        value="{{ dish.category if dish else '' }}"
-                        placeholder="Наприклад: Паста"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="image">
-                    Фото страви
-                </label>
-
-                {% if dish and dish.image %}
-
-                    <div class="current-image">
-
-                        <p>
-                            Поточне фото
-                        </p>
-
-                        <img
-                            src="{{ url_for('static', filename='images/' + dish.image) }}"
-                            alt="{{ dish.name }}"
-                        >
-
-                    </div>
-
-                {% endif %}
-
-
-                <div class="image-upload">
-
-                    <input
-                        type="file"
-                        id="image"
-                        name="image"
-                        accept=".jpg,.jpeg,.png,.webp"
-                    >
-
-                    <label for="image" class="image-upload-label">
-
-                        <span class="upload-icon">
-                            📷
-                        </span>
-
-                        <span>
-                            {% if dish and dish.image %}
-                                Обрати нове фото
-                            {% else %}
-                                Обрати фото
-                            {% endif %}
-                        </span>
-
-                    </label>
-
-                </div>
-
-                <small>
-                    JPG, JPEG, PNG або WEBP. Максимальний розмір — 5 МБ.
-                </small>
-
-            </div>
-
-
-            <div class="image-preview-container">
-
-                <img
-                    id="image-preview"
-                    src=""
-                    alt="Попередній перегляд"
-                >
-
-            </div>
-
-
-            <div class="admin-edit-buttons">
+                <!-- BACK -->
 
                 <a
                     href="{{ url_for('admin') }}"
-                    class="button secondary-button"
+                    class="admin-back-link"
                 >
-                    ← Назад
+                    ← Назад до адмін-панелі
                 </a>
 
 
-                <button
-                    type="submit"
-                    class="button"
-                >
+                <!-- HEADER -->
 
-                    {% if dish %}
-                        Зберегти зміни
-                    {% else %}
-                        Додати страву
-                    {% endif %}
+                <div class="admin-edit-header mt-4 mb-4">
 
-                </button>
+                    <span class="admin-label">
+                        VYBE ADMIN
+                    </span>
+
+                    <h1 class="display-5 fw-bold mt-3">
+
+                        {% if dish %}
+                            Редагування страви
+                        {% else %}
+                            Додавання страви
+                        {% endif %}
+
+                    </h1>
+
+                    <p class="text-muted">
+                        Заповніть інформацію про страву.
+                    </p>
+
+                </div>
+
+
+                {% if error %}
+
+                <div class="alert alert-danger mb-4">
+                    {{ error }}
+                </div>
+
+                {% endif %}
+
+
+                <!-- FORM CARD -->
+
+                <div class="admin-form-card">
+
+                    <form
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token() }}"
+                        >
+
+
+                        <!-- INFORMATION -->
+
+                        <div class="admin-form-section">
+
+                            <div class="admin-section-heading">
+
+                                <span class="section-number">
+                                    01
+                                </span>
+
+                                <div>
+                                    <h3>
+                                        Інформація про страву
+                                    </h3>
+
+                                    <p>
+                                        Основні дані
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="mb-4">
+
+                                <label
+                                    for="name"
+                                    class="form-label fw-semibold"
+                                >
+                                    Назва страви
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control form-control-lg"
+                                    id="name"
+                                    name="name"
+                                    value="{{ dish.name if dish else '' }}"
+                                    placeholder="Наприклад: Карбонара"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="mb-4">
+
+                                <label
+                                    for="description"
+                                    class="form-label fw-semibold"
+                                >
+                                    Опис
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    id="description"
+                                    name="description"
+                                    rows="5"
+                                    placeholder="Опишіть склад та особливості страви..."
+                                    required
+                                >{{ dish.description if dish else '' }}</textarea>
+
+                            </div>
+
+
+                            <div class="row g-4">
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="price"
+                                        class="form-label fw-semibold"
+                                    >
+                                        Ціна
+                                    </label>
+
+                                    <div class="input-group input-group-lg">
+
+                                        <span class="input-group-text">
+                                            €
+                                        </span>
+
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            id="price"
+                                            name="price"
+                                            step="0.01"
+                                            min="0"
+                                            value="{{ dish.price if dish else '' }}"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="category"
+                                        class="form-label fw-semibold"
+                                    >
+                                        Категорія
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        class="form-control form-control-lg"
+                                        id="category"
+                                        name="category"
+                                        value="{{ dish.category if dish else '' }}"
+                                        placeholder="Наприклад: Паста"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHOTO -->
+
+                        <div class="admin-form-section">
+
+                            <div class="admin-section-heading">
+
+                                <span class="section-number">
+                                    02
+                                </span>
+
+                                <div>
+
+                                    <h3>
+                                        Фотографія
+                                    </h3>
+
+                                    <p>
+                                        Додайте фото страви
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            {% if dish and dish.image %}
+
+                            <div class="mb-4">
+
+                                <p class="fw-semibold mb-2">
+                                    Поточне фото
+                                </p>
+
+                                <div class="current-dish-image">
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='images/uploads/' + dish.image
+                                        ) }}"
+                                        alt="{{ dish.name }}"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                            {% endif %}
+
+
+                            <label
+                                for="image"
+                                class="upload-area"
+                            >
+
+                                <div class="upload-icon">
+                                    +
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Завантажити фото
+                                    </strong>
+
+                                    <small>
+                                        JPG, JPEG, PNG або WEBP
+                                    </small>
+
+                                </div>
+
+                            </label>
+
+                            <input
+                                type="file"
+                                id="image"
+                                name="image"
+                                accept=".jpg,.jpeg,.png,.webp"
+                                class="d-none"
+                            >
+
+
+                            <!-- PREVIEW -->
+
+                            <div
+                                id="image-preview-container"
+                                class="mt-4"
+                                style="display:none;"
+                            >
+
+                                <p class="fw-semibold">
+                                    Нове фото
+                                </p>
+
+                                <div class="current-dish-image">
+
+                                    <img
+                                        id="image-preview"
+                                        src=""
+                                        alt="Попередній перегляд"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="admin-form-actions">
+
+                            <a
+                                href="{{ url_for('admin') }}"
+                                class="btn btn-outline-secondary btn-lg"
+                            >
+                                Скасувати
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger btn-lg px-5"
+                            >
+
+                                {% if dish %}
+                                    Зберегти зміни →
+                                {% else %}
+                                    Додати страву →
+                                {% endif %}
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
 
             </div>
 
-        </form>
+        </div>
 
     </div>
 
@@ -232,53 +352,46 @@ VYBE — {% if dish %}Редагування страви{% else %}Нова ст
 <script>
 
 const imageInput = document.getElementById("image");
-const imagePreview = document.getElementById("image-preview");
+const previewContainer = document.getElementById(
+    "image-preview-container"
+);
+const preview = document.getElementById(
+    "image-preview"
+);
 
-imageInput.addEventListener("change", function () {
+if (imageInput) {
 
-    const file = this.files[0];
+    imageInput.addEventListener(
+        "change",
+        function () {
 
-    if (!file) {
+            const file = this.files[0];
 
-        imagePreview.style.display = "none";
-        imagePreview.src = "";
+            if (!file) {
 
-        return;
-    }
+                previewContainer.style.display = "none";
 
-    const allowedTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/webp"
-    ];
+                return;
+            }
 
-    if (!allowedTypes.includes(file.type)) {
+            const reader = new FileReader();
 
-        alert(
-            "Будь ласка, виберіть JPG, PNG або WEBP."
-        );
+            reader.onload = function (event) {
 
-        this.value = "";
+                preview.src = event.target.result;
 
-        imagePreview.style.display = "none";
-        imagePreview.src = "";
+                previewContainer.style.display = "block";
 
-        return;
-    }
+            };
 
-    const reader = new FileReader();
+            reader.readAsDataURL(file);
 
-    reader.onload = function (event) {
+        }
+    );
 
-        imagePreview.src = event.target.result;
-
-        imagePreview.style.display = "block";
-    };
-
-    reader.readAsDataURL(file);
-
-});
+}
 
 </script>
 
 {% endblock %}
+

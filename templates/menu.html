@@ -9,84 +9,104 @@ VYBE — Меню
 
 {% block content %}
 
-<section class="menu-page">
+<section class="menu-page py-5">
 
-    <div class="menu-header">
+    <div class="container">
 
-        <p class="hero-small">
-            VYBE RESTAURANT
-        </p>
+        <!-- HEADER -->
 
-        <h1>
-            Наше меню
-        </h1>
+        <div class="menu-header text-center mb-5">
 
-        <p>
-            Оберіть свою улюблену страву
-        </p>
+            <span class="admin-label">
+                VYBE RESTAURANT
+            </span>
 
-    </div>
+            <h1 class="display-3 fw-bold mt-3">
+                Наше меню
+            </h1>
 
+            <p class="lead text-muted">
+                Обирайте те, що хочеться саме зараз.
+            </p>
 
-    {% if categories %}
+        </div>
+
 
         {% for category, dishes in categories.items() %}
 
-        <section class="menu-section">
+        <section class="menu-category mb-5">
 
-            <div class="menu-section-header">
+            <div class="category-title mb-4">
 
                 <h2>
                     {{ category }}
                 </h2>
 
-                <div class="menu-line"></div>
-
             </div>
 
 
-            <div class="menu-grid">
+            <div class="row g-4">
 
                 {% for dish in dishes %}
 
-                <div class="menu-card">
+                <div class="col-12 col-md-6 col-xl-4">
 
-                    <div class="menu-card-content">
+                    <article class="menu-card h-100">
 
-                        <div class="menu-card-top">
+                        {% if dish.image %}
+
+                        <div class="menu-image-wrapper">
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename='images/uploads/' + dish.image
+                                ) }}"
+                                alt="{{ dish.name }}"
+                                class="menu-card-image"
+                            >
+
+                        </div>
+
+                        {% endif %}
+
+
+                        <div class="menu-card-content">
+
+                            <span class="menu-category-badge">
+                                {{ dish.category }}
+                            </span>
 
                             <h3>
                                 {{ dish.name }}
                             </h3>
 
-                            <span class="menu-price">
-                                €{{ "%.2f"|format(dish.price) }}
-                            </span>
+                            <p>
+                                {{ dish.description }}
+                            </p>
+
+
+                            <div class="menu-card-bottom">
+
+                                <strong class="menu-price">
+                                    €{{ "%.2f"|format(dish.price) }}
+                                </strong>
+
+                                <a
+                                    href="{{ url_for(
+                                        'dish',
+                                        dish_id=dish.id
+                                    ) }}"
+                                    class="menu-more"
+                                >
+                                    Детальніше →
+                                </a>
+
+                            </div>
 
                         </div>
 
-
-                        <p class="menu-description">
-                            {{ dish.description }}
-                        </p>
-
-
-                        <div class="menu-card-bottom">
-
-                            <span class="menu-category">
-                                {{ dish.category }}
-                            </span>
-
-                            <a
-                                href="{{ url_for('dish', dish_id=dish.id) }}"
-                                class="button"
-                            >
-                                Переглянути
-                            </a>
-
-                        </div>
-
-                    </div>
+                    </article>
 
                 </div>
 
@@ -98,21 +118,7 @@ VYBE — Меню
 
         {% endfor %}
 
-    {% else %}
-
-        <div class="admin-empty">
-
-            <h2>
-                Меню поки порожнє
-            </h2>
-
-            <p>
-                Незабаром тут з'являться наші страви.
-            </p>
-
-        </div>
-
-    {% endif %}
+    </div>
 
 </section>
 

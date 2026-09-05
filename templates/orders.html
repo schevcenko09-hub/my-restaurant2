@@ -1,6 +1,5 @@
 
 
-
 {% extends "base.html" %}
 
 {% block title %}
@@ -14,7 +13,7 @@ VYBE — Мої замовлення
     <div class="orders-header">
 
         <p class="hero-small">
-            VYBE RESTAURANT
+            VYBE ACCOUNT
         </p>
 
         <h1>
@@ -22,149 +21,137 @@ VYBE — Мої замовлення
         </h1>
 
         <p>
-            Історія ваших замовлень
+            Історія ваших замовлень.
         </p>
 
     </div>
 
-
     {% if orders %}
 
-        <div class="orders-list">
+    <div class="orders-list">
 
-            {% for order in orders %}
+        {% for order in orders %}
 
-                <div class="order-card">
+        <div class="order-card">
 
-                    <div class="order-card-header">
+            <div class="order-top">
 
-                        <div>
+                <div>
 
-                            <p class="order-label">
-                                ЗАМОВЛЕННЯ
-                            </p>
+                    <h2>
+                        Замовлення №{{ order.id }}
+                    </h2>
 
-                            <h2>
-                                №{{ order.id }}
-                            </h2>
-
-                        </div>
-
-
-                        <div class="order-status
-                            {% if order.status == 'Нове' %}
-                                status-new
-                            {% elif order.status == 'Виконується' %}
-                                status-working
-                            {% elif order.status == 'Виконано' %}
-                                status-done
-                            {% elif order.status == 'Скасовано' %}
-                                status-cancelled
-                            {% endif %}
-                        ">
-
-                            {{ order.status }}
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="order-date">
-
-                        {{ order.created_at.strftime("%d.%m.%Y о %H:%M") }}
-
-                    </div>
-
-
-                    <div class="order-divider"></div>
-
-
-                    <div class="order-items">
-
-                        {% for item in order.items %}
-
-                            <div class="order-item">
-
-                                <div class="order-item-info">
-
-                                    <strong>
-                                        {{ item.name }}
-                                    </strong>
-
-                                    <span>
-                                        {{ item.quantity }} ×
-                                        €{{ "%.2f"|format(item.price) }}
-                                    </span>
-
-                                </div>
-
-
-                                <strong class="order-item-total">
-
-                                    €{{ "%.2f"|format(
-                                        item.price * item.quantity
-                                    ) }}
-
-                                </strong>
-
-                            </div>
-
-                        {% endfor %}
-
-                    </div>
-
-
-                    <div class="order-divider"></div>
-
-
-                    <div class="order-bottom">
-
-                        <span>
-                            Загальна сума
-                        </span>
-
-                        <strong>
-                            €{{ "%.2f"|format(order.total) }}
-                        </strong>
-
-                    </div>
+                    <p>
+                        {{ order.created_at.strftime(
+                            "%d.%m.%Y %H:%M"
+                        ) }}
+                    </p>
 
                 </div>
 
-            {% endfor %}
+                <span class="order-status">
+                    {{ order.status }}
+                </span>
+
+            </div>
+
+            <div class="order-items">
+
+                {% for item in order.items %}
+
+                <div class="order-item">
+
+                    <div class="order-item-info">
+
+                        <strong>
+                            {{ item.name }}
+                        </strong>
+
+                        <span>
+                            × {{ item.quantity }}
+                        </span>
+
+                    </div>
+
+                    <strong>
+                        €{{ "%.2f"|format(
+                            item.price * item.quantity
+                        ) }}
+                    </strong>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="order-bottom">
+
+                <strong>
+                    Загальна сума:
+                    €{{ "%.2f"|format(order.total) }}
+                </strong>
+
+                {% if order.status == "Нове" %}
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'cancel_order',
+                        order_id=order.id
+                    ) }}"
+                >
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
+
+                    <button
+                        type="submit"
+                        class="delete-button"
+                    >
+                        Скасувати
+                    </button>
+
+                </form>
+
+                {% endif %}
+
+            </div>
 
         </div>
+
+        {% endfor %}
+
+    </div>
 
     {% else %}
 
-        <div class="orders-empty">
+    <div class="empty-orders">
 
-            <div class="empty-icon">
-                🍽
-            </div>
+        <h2>
+            Замовлень поки немає
+        </h2>
 
-            <h2>
-                Замовлень ще немає
-            </h2>
+        <p>
+            Коли ви оформите замовлення,
+            воно з'явиться тут.
+        </p>
 
-            <p>
-                Ви ще нічого не замовляли.
-                Оберіть щось смачне з нашого меню!
-            </p>
+        <a
+            href="{{ url_for('menu') }}"
+            class="button"
+        >
+            Перейти до меню
+        </a>
 
-            <a
-                href="{{ url_for('menu') }}"
-                class="button"
-            >
-                Перейти до меню
-            </a>
-
-        </div>
+    </div>
 
     {% endif %}
 
 </section>
 
 {% endblock %}
-

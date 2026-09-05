@@ -8,185 +8,250 @@ VYBE — Історія замовлень
 
 {% block content %}
 
-<section class="admin-page">
+<section class="admin-orders-page py-5">
 
-    <div class="admin-header">
+    <div class="container">
 
-        <p class="hero-small">
-            VYBE RESTAURANT
-        </p>
+        <!-- HEADER -->
 
-        <h1>
-            Історія замовлень
-        </h1>
+        <div class="admin-header text-center mb-5">
 
-        <p>
-            Усі замовлення користувачів
-        </p>
+            <span class="admin-label">
+                VYBE ADMIN
+            </span>
 
-    </div>
+            <h1 class="display-5 fw-bold mt-3">
+                Історія замовлень
+            </h1>
+
+            <p class="lead text-muted">
+                Усі замовлення користувачів
+            </p>
+
+        </div>
 
 
-    {% if orders %}
+        {% if orders %}
 
-        <div class="orders-list">
+        <div class="row g-4">
 
             {% for order in orders %}
 
+            <div class="col-12">
+
                 <div class="admin-order-card">
 
-                    <div class="order-top">
+                    <!-- TOP -->
+
+                    <div class="order-card-top">
 
                         <div>
 
-                            <h2>
+                            <span class="order-number">
                                 Замовлення №{{ order.id }}
-                            </h2>
-
-                            <p>
-                                Користувач:
-                                <strong>
-                                    {{ order.user.username }}
-                                </strong>
-                            </p>
-
-                            <p>
-                                Email:
-                                <strong>
-                                    {{ order.user.email }}
-                                </strong>
-                            </p>
-
-                        </div>
-
-
-                        <div class="order-status">
-
-                            <span>
-                                {{ order.status }}
                             </span>
 
+                            <h2>
+                                {{ order.user.username }}
+                            </h2>
+
+                            <p class="order-email">
+                                {{ order.user.email }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="text-md-end">
+
+                            {% if order.status == "Нове" %}
+
+                            <span class="order-status status-new">
+                                Нове
+                            </span>
+
+                            {% elif order.status == "Виконується" %}
+
+                            <span class="order-status status-process">
+                                Виконується
+                            </span>
+
+                            {% elif order.status == "Виконано" %}
+
+                            <span class="order-status status-done">
+                                Виконано
+                            </span>
+
+                            {% else %}
+
+                            <span class="order-status status-cancelled">
+                                Скасовано
+                            </span>
+
+                            {% endif %}
+
+                            <div class="order-date mt-2">
+
+                                {{ order.created_at.strftime(
+                                    "%d.%m.%Y • %H:%M"
+                                ) }}
+
+                            </div>
+
                         </div>
 
                     </div>
 
 
-                    <div class="order-date">
+                    <!-- ITEMS -->
 
-                        {{ order.created_at.strftime("%d.%m.%Y %H:%M") }}
-
-                    </div>
-
-
-                    <div class="order-items">
+                    <div class="order-products">
 
                         {% for item in order.items %}
 
-                            <div class="order-item">
+                        <div class="order-product">
 
-                                <div>
+                            <div>
 
-                                    <strong>
-                                        {{ item.name }}
-                                    </strong>
+                                <strong>
+                                    {{ item.name }}
+                                </strong>
 
-                                    <span>
-                                        × {{ item.quantity }}
-                                    </span>
-
-                                </div>
-
-                                <div>
-
-                                    €{{ "%.2f"|format(item.price * item.quantity) }}
-
-                                </div>
+                                <span>
+                                    × {{ item.quantity }}
+                                </span>
 
                             </div>
+
+                            <strong>
+                                €{{ "%.2f"|format(
+                                    item.price * item.quantity
+                                ) }}
+                            </strong>
+
+                        </div>
 
                         {% endfor %}
 
                     </div>
 
 
-                    <div class="order-bottom">
+                    <!-- BOTTOM -->
 
-                        <strong>
-                            Загальна сума:
-                            €{{ "%.2f"|format(order.total) }}
-                        </strong>
+                    <div class="order-card-bottom">
+
+                        <div>
+
+                            <span class="total-label">
+                                Загальна сума
+                            </span>
+
+                            <strong class="order-total">
+                                €{{ "%.2f"|format(order.total) }}
+                            </strong>
+
+                        </div>
 
 
                         <div class="order-controls">
 
                             {% if order.status == "Нове" %}
 
-                                <form
-                                    method="POST"
-                                    action="{{ url_for('admin_order_status', order_id=order.id) }}"
+                            <form
+                                method="POST"
+                                action="{{ url_for(
+                                    'admin_order_status',
+                                    order_id=order.id
+                                ) }}"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    value="{{ csrf_token() }}"
                                 >
 
-                                    <input
-                                        type="hidden"
-                                        name="status"
-                                        value="Скасовано"
-                                    >
+                                <input
+                                    type="hidden"
+                                    name="status"
+                                    value="Скасовано"
+                                >
 
-                                    <button
-                                        type="submit"
-                                        class="delete-button"
-                                    >
-                                        Скасувати
-                                    </button>
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-danger"
+                                >
+                                    Скасувати
+                                </button>
 
-                                </form>
+                            </form>
 
                             {% endif %}
 
 
                             <form
                                 method="POST"
-                                action="{{ url_for('admin_order_status', order_id=order.id) }}"
+                                action="{{ url_for(
+                                    'admin_order_status',
+                                    order_id=order.id
+                                ) }}"
+                                class="d-flex gap-2"
                             >
 
-                                <select name="status">
+                                <input
+                                    type="hidden"
+                                    name="csrf_token"
+                                    value="{{ csrf_token() }}"
+                                >
+
+                                <select
+                                    name="status"
+                                    class="form-select"
+                                >
 
                                     <option
                                         value="Нове"
-                                        {% if order.status == "Нове" %}selected{% endif %}
+                                        {% if order.status == "Нове" %}
+                                        selected
+                                        {% endif %}
                                     >
                                         Нове
                                     </option>
 
                                     <option
                                         value="Виконується"
-                                        {% if order.status == "Виконується" %}selected{% endif %}
+                                        {% if order.status == "Виконується" %}
+                                        selected
+                                        {% endif %}
                                     >
                                         Виконується
                                     </option>
 
                                     <option
                                         value="Виконано"
-                                        {% if order.status == "Виконано" %}selected{% endif %}
+                                        {% if order.status == "Виконано" %}
+                                        selected
+                                        {% endif %}
                                     >
                                         Виконано
                                     </option>
 
                                     <option
                                         value="Скасовано"
-                                        {% if order.status == "Скасовано" %}selected{% endif %}
+                                        {% if order.status == "Скасовано" %}
+                                        selected
+                                        {% endif %}
                                     >
                                         Скасовано
                                     </option>
 
                                 </select>
 
-
                                 <button
                                     type="submit"
-                                    class="button"
+                                    class="btn btn-dark"
                                 >
-                                    Змінити статус
+                                    Зберегти
                                 </button>
 
                             </form>
@@ -197,28 +262,35 @@ VYBE — Історія замовлень
 
                 </div>
 
+            </div>
+
             {% endfor %}
 
         </div>
 
-    {% else %}
+        {% else %}
 
-        <div class="admin-empty">
+        <div class="admin-empty text-center py-5">
 
-            <h2>
+            <div class="empty-icon">
+                🧾
+            </div>
+
+            <h2 class="fw-bold mt-3">
                 Замовлень поки немає
             </h2>
 
-            <p>
+            <p class="text-muted">
                 Коли користувач оформить замовлення,
                 воно з'явиться тут.
             </p>
 
         </div>
 
-    {% endif %}
+        {% endif %}
+
+    </div>
 
 </section>
 
 {% endblock %}
-

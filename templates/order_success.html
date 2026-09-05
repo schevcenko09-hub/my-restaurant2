@@ -3,45 +3,104 @@
 {% extends "base.html" %}
 
 {% block title %}
-VYBE — Замовлення оформлено
+VYBE — Замовлення прийнято
 {% endblock %}
 
 {% block content %}
 
-<section class="menu-page">
+<section class="success-page py-5">
 
-    <div class="menu-header">
+    <div class="container">
 
-        <p class="hero-small">VYBE RESTAURANT</p>
+        <div class="row justify-content-center">
 
-        <h1>Замовлення оформлено!</h1>
+            <div class="col-12 col-md-8 col-lg-6">
 
-        <p>
-            Дякуємо за ваше замовлення.
-        </p>
+                <div class="success-card text-center">
 
-        <p>
-            Номер замовлення:
-            <strong>#{{ order.id }}</strong>
-        </p>
+                    <div class="success-icon">
+                        ✓
+                    </div>
 
-        <p>
-            Сума:
-            <strong>€{{ "%.2f"|format(order.total) }}</strong>
-        </p>
+                    <span class="admin-label">
+                        VYBE RESTAURANT
+                    </span>
 
-        <p>
-            Статус:
-            <strong>{{ order.status }}</strong>
-        </p>
+                    <h1 class="display-5 fw-bold mt-3">
+                        Замовлення прийнято!
+                    </h1>
 
-        <a href="{{ url_for('orders') }}" class="button">
-            Мої замовлення
-        </a>
+                    <p class="text-muted fs-5">
+                        Дякуємо за ваше замовлення.
+                    </p>
 
-        <a href="{{ url_for('menu') }}" class="button">
-            Повернутися до меню
-        </a>
+
+                    <div class="success-info">
+
+                        <div class="success-info-row">
+
+                            <span>
+                                Номер замовлення
+                            </span>
+
+                            <strong>
+                                №{{ order.id }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="success-info-row">
+
+                            <span>
+                                Статус
+                            </span>
+
+                            <span class="order-status status-new">
+                                {{ order.status }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="success-info-row success-total-row">
+
+                            <span>
+                                Загальна сума
+                            </span>
+
+                            <strong>
+                                €{{ "%.2f"|format(order.total) }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="d-grid gap-3 mt-4">
+
+                        <a
+                            href="{{ url_for('orders') }}"
+                            class="btn btn-danger btn-lg"
+                        >
+                            Мої замовлення
+                        </a>
+
+                        <a
+                            href="{{ url_for('menu') }}"
+                            class="btn btn-outline-dark btn-lg"
+                        >
+                            Повернутися до меню
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 

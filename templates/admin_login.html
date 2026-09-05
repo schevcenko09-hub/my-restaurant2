@@ -3,46 +3,76 @@
 {% extends "base.html" %}
 
 {% block title %}
-VYBE — Вхід адміністратора
+VYBE — Адмін
 {% endblock %}
 
 {% block content %}
 
-<section class="auth-page">
+<section class="auth-page admin-auth-page">
 
     <div class="auth-box">
 
-        <h1>Вхід адміністратора</h1>
+        <p class="hero-small">
+            VYBE ADMIN
+        </p>
+
+        <h1>
+            Вхід до адмін-панелі
+        </h1>
+
+        <p>
+            Авторизуйтесь для керування рестораном.
+        </p>
 
         {% if error %}
-            <p class="error">{{ error }}</p>
+
+        <div class="error">
+            {{ error }}
+        </div>
+
         {% endif %}
 
         <form method="POST">
 
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" required>
-            </div>
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
 
-            <div class="form-group">
-                <label>Пароль</label>
-                <input type="password" name="password" required>
-            </div>
+            <label for="email">
+                Email
+            </label>
 
-            <button type="submit" class="button">
+            <input
+                type="email"
+                id="email"
+                name="email"
+                required
+            >
+
+            <label for="password">
+                Пароль
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+            >
+
+            <button
+                type="submit"
+                class="button"
+            >
                 Увійти
             </button>
 
         </form>
-
-        <a href="{{ url_for('menu') }}">
-            Повернутися до меню
-        </a>
 
     </div>
 
 </section>
 
 {% endblock %}
-
